@@ -6,12 +6,11 @@ title: Computation Engineering – WiSe 2025/2026
 
 ## Introduction
 
-Welcome! In this module you will learn a wide skillset in the domain of computational engineering which _ in your _
+Welcome! In this module you will learn a wide set of methods in the domain of computational engineering which will aid you in establishing practical skills in your engineering career.
 
-The focus of this course is on what is inherently computational with theoretical depth limited to what is useful for practicing engineers to know in their everyday work.
+This course bridges many topics which are traditionally taught separately in order to establish a cohesive framework which connects everything else that you have learned and/or will learn throughout the course of your graduate studies back to _a_ practical framework that you are comfortable with using. The focus of this course is on what is inherently computational (and just as importantly what _isn't_ computational!), with theoretical depth limited to what is useful for practicing engineers to know in their everyday work. At the end of each unit further literature is suggested for more in-depth study. This course is intentionally structured in a such a way that concepts introduced are always given with code that can be played with, this is essential for learning these skillsets and establishing a practical working knowledge of all the methods introduced here. While the context and examples are focussed on space engineering, these methods are, of course, used in a wide variety of engineering disciplines.
 
 Below you’ll find links to each unit's notebook. Each unit is meant to be studied in a single week.
-
 
 ## Syllabus
 
@@ -32,7 +31,23 @@ Below you’ll find links to each unit's notebook. Each unit is meant to be stud
 | **13** | **{doc}`Control IV – reinforcement-learning foundations <notebooks/13_control-rl-foundations>`**<br>• MDPs, value & policy functions<br>• Tabular & deep Q-learning, actor-critic<br>• Safety envelopes & reward shaping |
 | **14** | **{doc}`RL-based orbit station-keeping <notebooks/14_rl-station-keeping>`**<br>• Problem statement & environment definition<br>• Agent training, evaluation, fuel trade-off<br>• Frontiers: hierarchical RL, onboard edge compute |
 
-## 
+## Prerequisites
+
+Students for this course are expected to have a foundation undergraduate engineering topics especially in calculus, linear algebra, differential equations and dynamics. While a background in more senior topics such as control, fluid mechanics and machine learning is beneficial, they are not essential since these topics are re-introduced and therefore self-contained for the purposes of completing this course. However, since only the computational aspects of these topics are covered, it is highly recommended for students to pursue external sources for a more in depth education on these topics. Basic python programming skills are an essential prequisite.
+
+## Course information
+
+Instructor contact information:
+
+TAs: TBD
+
+## Grading policy 
+
+TBD
+
+## Help with setting up your system, python environments and running these notebooks offline.
+
+TBD
 
 ```{contents}
 :local:
