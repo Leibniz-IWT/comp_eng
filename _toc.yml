@@ -2,18 +2,45 @@ format: jb-book
 
 root: intro          # intro.md (or .ipynb) must live beside this file
 
-chapters:            # comment-out lines for weeks you haven’t created yet
+chapters:
   - file: notebooks/01_model-classification
+    title: "1  Model classification I – building blocks"
+
   - file: notebooks/02_dof-analysis
+    title: "2  Model classification II – degrees of freedom"
+
   - file: notebooks/03_chaos
+    title: "3  Model classification III – non-linearity & chaos"
+
   - file: notebooks/04_simulation-algebraic
+    title: "4  Simulation I – algebraic systems"
+
   - file: notebooks/05_simulation-ode-dae
+    title: "5  Simulation II – ODE / DAE systems"
+
   - file: notebooks/06_simulation-pde
+    title: "6  Simulation III – continuum / PDE intro"
+
   - file: notebooks/07_optimisation-linear
+    title: "7  Optimisation I – convex & linear"
+
   - file: notebooks/08_optimisation-nonlinear
+    title: "8  Optimisation II – non-linear programming"
+
   - file: notebooks/09_optimisation-global
+    title: "9  Optimisation III – global / derivative-free"
+
   - file: notebooks/10_control-classical
+    title: "10  Control I – classical feedback"
+
   - file: notebooks/11_control-lqr
+    title: "11  Control II – state-space & optimal linear"
+
   - file: notebooks/12_control-mpc
+    title: "12  Control III – model-predictive & non-linear"
+
   - file: notebooks/13_control-rl-foundations
+    title: "13  Control IV – RL foundations"
+
   - file: notebooks/14_rl-station-keeping
+    title: "14  RL-based orbit station-keeping"
