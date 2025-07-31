@@ -1,8 +1,8 @@
 ---
-title: Computation Engineering – WiSe 2025/2026
+title: Computational Engineering – WiSe 2025/2026
 ---
 
-# Computation Engineering – WiSe 2025/2026
+# Computational Engineering – WiSe 2025/2026
 
 ## Introduction
 
