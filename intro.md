@@ -4,9 +4,18 @@ title: Computation Engineering – WiSe 2025/2026
 
 # Computation Engineering – WiSe 2025/2026
 
-Welcome to the module!  Below you’ll find links to each week’s notebook.
+## Introduction
 
-| Lecture # | Title & key sub-topics |
+Welcome! In this module you will learn a wide skillset in the domain of computational engineering which _ in your _
+
+The focus of this course is on what is inherently computational with theoretical depth limited to what is useful for practicing engineers to know in their everyday work.
+
+Below you’ll find links to each unit's notebook. Each unit is meant to be studied in a single week.
+
+
+## Syllabus
+
+| Unit # | Title & key sub-topics |
 |-----------|-----------------------|
 | **1** | **{doc}`Model classification I – building blocks <notebooks/01_model-classification>`**<br>• Model classification and structure: linear / non-linear, coupled / uncoupled, symmetry, static / dynamic<br>• Conservation rules & force balances |
 | **2** | **{doc}`Model classification II – degrees of freedom <notebooks/02_dof-analysis>`**<br>• DOF analysis & constraints<br>• Determined vs. under-/over-determined problems |
@@ -23,7 +32,7 @@ Welcome to the module!  Below you’ll find links to each week’s notebook.
 | **13** | **{doc}`Control IV – reinforcement-learning foundations <notebooks/13_control-rl-foundations>`**<br>• MDPs, value & policy functions<br>• Tabular & deep Q-learning, actor-critic<br>• Safety envelopes & reward shaping |
 | **14** | **{doc}`RL-based orbit station-keeping <notebooks/14_rl-station-keeping>`**<br>• Problem statement & environment definition<br>• Agent training, evaluation, fuel trade-off<br>• Frontiers: hierarchical RL, onboard edge compute |
 
-
+## 
 
 ```{contents}
 :local:
