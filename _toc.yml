@@ -1,9 +1,9 @@
 format: jb-book
-root: intro                         # optional: a landing “About” page (intro.md)
 
-chapters:
+root: intro          # intro.md (or .ipynb) must live beside this file
+
+chapters:            # comment-out lines for weeks you haven’t created yet
   - file: notebooks/week01_model-classification
   - file: notebooks/week02_dof-analysis
   - file: notebooks/week03_chaos
-  # …
   - file: notebooks/week14_rl-station-keeping
