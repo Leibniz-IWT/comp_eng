@@ -1,8 +1,11 @@
+---
+title: Computation Engineering – WiSe 2025
+---
+
 # Computation Engineering – WiSe 2025
 
-#TODO: explains prerequisites, assessment and how to run notebooks locally
+Welcome to the module!  Below you’ll find links to each week’s notebook.
 
 ```{contents}
----
-depth: 2   # optional auto-generated mini-ToC for this page
----
+:local:
+:depth: 2
