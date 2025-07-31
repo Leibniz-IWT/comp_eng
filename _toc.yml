@@ -3,7 +3,17 @@ format: jb-book
 root: intro          # intro.md (or .ipynb) must live beside this file
 
 chapters:            # comment-out lines for weeks you haven’t created yet
-  - file: notebooks/week01_model-classification
-  - file: notebooks/week02_dof-analysis
-  - file: notebooks/week03_chaos
-  - file: notebooks/week14_rl-station-keeping
+  - file: notebooks/01_model-classification
+  - file: notebooks/02_dof-analysis
+  - file: notebooks/03_chaos
+  - file: notebooks/04_simulation-algebraic
+  - file: notebooks/05_simulation-ode-dae
+  - file: notebooks/06_simulation-pde
+  - file: notebooks/07_optimisation-linear
+  - file: notebooks/08_optimisation-nonlinear
+  - file: notebooks/09_optimisation-global
+  - file: notebooks/10_control-classical
+  - file: notebooks/11_control-lqr
+  - file: notebooks/12_control-mpc
+  - file: notebooks/13_control-rl-foundations
+  - file: notebooks/14_rl-station-keeping
