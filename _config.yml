@@ -1,0 +1,15 @@
+# Minimal Jupyter Book config
+title: Computation Engineering (2025)
+author: Stefan Endres & Lutz Mädler
+only_build_toc_files: true          # only the notebooks listed in _toc.yml
+repository:
+  url: https://github.com/Leibniz-IWT/comp_eng
+  path_to_book: .
+html:
+  favicon: images/favicon.ico
+  use_repository_button: true
+  use_binder_button: true           # shows “launch 🚀” badge automatically
+  extra_footer: |
+    © 2025 University of Bremen. Released under CC-BY-4.0.
+launch_buttons:
+  binderhub_url: https://mybinder.org

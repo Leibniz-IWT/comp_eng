@@ -1,0 +1,9 @@
+jupyter
+jupyterlab               # for local work
+jupyter-book>=1.0.0
+numpy
+scipy
+matplotlib
+sympy
+gymnasium                # RL envs
+stable-baselines3

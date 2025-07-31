@@ -1,0 +1,9 @@
+format: jb-book
+root: intro                         # optional: a landing “About” page (intro.md)
+
+chapters:
+  - file: notebooks/week01_model-classification
+  - file: notebooks/week02_dof-analysis
+  - file: notebooks/week03_chaos
+  # …
+  - file: notebooks/week14_rl-station-keeping
