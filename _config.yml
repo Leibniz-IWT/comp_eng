@@ -1,5 +1,5 @@
 # Minimal Jupyter Book config
-title: Computation Engineering (2025)
+title: Computational Methods (WiSe 2025/2026)
 author: Stefan Endres & Lutz Mädler
 only_build_toc_files: true          # only the notebooks listed in _toc.yml
 repository:
