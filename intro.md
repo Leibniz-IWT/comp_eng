@@ -1,8 +1,8 @@
 ---
-title: Computational Engineering – WiSe 2025/2026
+title: Computational Methods – WiSe 2025/2026
 ---
 
-# Computational Engineering – WiSe 2025/2026
+# Computational Methods – WiSe 2025/2026
 
 ## Introduction
 
