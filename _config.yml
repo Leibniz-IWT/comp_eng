@@ -5,6 +5,7 @@ only_build_toc_files: true          # only the notebooks listed in _toc.yml
 repository:
   url: https://github.com/Leibniz-IWT/comp_eng
   path_to_book: .
+  branch: main
 html:
   favicon: images/favicon.ico
   use_repository_button: true
