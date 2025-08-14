@@ -1,9 +1,15 @@
-jupyter
-jupyterlab               # for local work
-jupyter-book>=1.0.0
-numpy
-scipy
-matplotlib
-sympy
-gymnasium                # RL envs
-stable-baselines3
+name: compeng
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - numpy
+  - scipy
+  - matplotlib
+  - sympy
+  - gymnasium
+  - pip
+  - pip:
+      - jupyter-book>=1.0.0
+      - stable-baselines3
