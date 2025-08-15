@@ -64,7 +64,7 @@ Binder will build a temporary Jupyter-Lab session in the cloud; nothing to insta
 
 ---
 #### 2. Run locally on your system with conda
-##### macOS / Linux — Terminal and Windows — PowerShell
+##### macOS / Linux (Terminal) and Windows (PowerShell)
 
 1. **Clone the repository and set up a local conda environment (once-off)**:
 
@@ -97,9 +97,9 @@ Pull the repo (git pull) and refresh the environment (conda env update -f enviro
 
 ---
 
-##### Windows — PowerShell / Cmd / Git Bash
+##### Windows with GitHub Desktop
 
-In Windows, after installing git, you can either use powershell and follow the instructions above or the GitHub Desktop app:
+In Windows, after installing git, you can either use powershell and follow the instructions above or the [GitHub Desktop app](https://github.com/desktop/desktop/tree/417117e2acef9d8dbb2cdf51aec6b72aeb9c6353?tab=readme-ov-file&gad_source=1&gad_campaignid=22900473783&gbraid=0AAAABAw-fa1wdIasXloAreiLkiQ1T9o3Z&gclid=CjwKCAjwtfvEBhAmEiwA-DsKjpBNyjMBIFXBnCcBqF5ce7y4U7KmUqu5RTtAKJ6lFTCf4fwvwIigWRoCgigQAvD_BwE#download-github-desktop):
 
 _In the GitHub Desktop app window:_
 
