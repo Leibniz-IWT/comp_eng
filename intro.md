@@ -97,15 +97,23 @@ Pull the repo (git pull) and refresh the environment (conda env update -f enviro
 
 ---
 
-##### Windows with GitHub Desktop
+##### Windows with GitHub Desktop and Anaconda app
 
 In Windows, after installing git, you can either use powershell and follow the instructions above or the [GitHub Desktop app](https://github.com/desktop/desktop/tree/417117e2acef9d8dbb2cdf51aec6b72aeb9c6353?tab=readme-ov-file&gad_source=1&gad_campaignid=22900473783&gbraid=0AAAABAw-fa1wdIasXloAreiLkiQ1T9o3Z&gclid=CjwKCAjwtfvEBhAmEiwA-DsKjpBNyjMBIFXBnCcBqF5ce7y4U7KmUqu5RTtAKJ6lFTCf4fwvwIigWRoCgigQAvD_BwE#download-github-desktop):
 
 _In the GitHub Desktop app window:_
 
-1. *File → Clone Repository…* → choose **comp_eng**.  
-2. *Repository → Open in Terminal* (or *Open in Git Bash*).  
-3. Run the same commands shown above.
+1. *File → Clone Repository…* (https://github.com/Leibniz-IWT/comp_eng) → choose **comp_eng**.  
+2. (Optional) *Repository → Open in Terminal* (or *Open in Git Bash*).  
+3. (Optional) Run the same commands shown above. 
+
+If you really want to avoid command lines completely, you can also install the environment in the Anaconda GUI app:
+
+ 1. Open **Anaconda Navigator** → *Environments* ↘︎ **Import**
+ 2. *Name*: `compeng`
+ 3. *File*: select `environment.yml` inside the cloned folder
+ 4. Click **Import** 
+
 
 ---
 
