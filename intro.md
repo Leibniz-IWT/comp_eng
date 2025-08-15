@@ -74,7 +74,7 @@ Binder will build a temporary Jupyter-Lab session in the cloud; nothing to insta
     conda env create -f environment.yml     # creates “compeng”
     conda activate compeng
     ```
-You can now start either jupyter lab or classic notebook or lab
+You can now start either jupyter lab or classic notebook, then every time you work on this course just reactive the virtual environment first:
 
 2. **Daily work flow (every time you start a new terminal session)**:
     ```bash
@@ -82,21 +82,22 @@ You can now start either jupyter lab or classic notebook or lab
     conda activate compeng  # Reactive the environment
     jupyter lab          # or: jupyter notebook
     ```
-Your browser will open at `http://localhost:8888`, then launch **notebooks/01_model-classification.ipynb**.
+Your browser will open at `http://localhost:8888`, then launch for e.g. **notebooks/01_model-classification.ipynb**.
 
 4. (Optional) **Updating later:**
 Pull the repo (git pull) and refresh the environment (conda env update -f environment.yml).
 
    ```bash
-   $ git pull
-   $ conda env update -f environment.yml
-
+   conda activate compeng
+   git pull
+   conda env update -f environment.yml
+   ```
 > **Note:** For every new terminal session you need reactive the environment:  
 > `conda activate compeng` _before_ running Jupyter or you could run into trouble when your system conda reverts to the base environment
 
 ---
 
-### Windows — PowerShell / Cmd / Git Bash
+##### Windows — PowerShell / Cmd / Git Bash
 
 In Windows, after installing git, you can either use powershell and follow the instructions above or the GitHub Desktop app:
 
