@@ -56,7 +56,7 @@ Click the **“Launch Binder”** badge at the top-right of any page (or the but
 Binder will build a temporary Jupyter-Lab session in the cloud; nothing to install on your computer.
 
 > **Tip:** The build takes a couple of minutes, a read-only preview appears first.  
-> Leave the tab open—your interactive session will load automatically when ready.
+> Leave the tab open: your interactive session will load automatically when ready.
 
 [![Launch on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Leibniz-IWT/comp_eng/main?urlpath=lab/tree/notebooks/01_model-classification.ipynb)
 
