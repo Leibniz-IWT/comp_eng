@@ -5,60 +5,39 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write           # required by actions/deploy-pages
+  contents: read           # for checkout
+  pages: write             # for deploy
+  id-token: write          # required by deploy-pages
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    #-----------------------------------------------------------
-    # 1. Check out the repo
-    #-----------------------------------------------------------
+    # 1 ─ Checkout the repo
     - uses: actions/checkout@v4
 
-    #-----------------------------------------------------------
-    # 2. Set up a Python env that matches Binder
-    #    (choose the file you actually maintain)
-    #-----------------------------------------------------------
-    - uses: mamba-org/setup-micromamba@v1          # faster than conda
+    # 2 ─ Python env (same as before)
+    - uses: actions/setup-python@v5
       with:
-        environment-file: binder/environment.yml   # OR binder/requirements.txt
-        create-args: >-
-          pip                                        # add pip so jupyter-book
-        cache-downloads: true
-        cache-env: true
+        python-version: '3.11'
 
-    #-----------------------------------------------------------
-    # 3. Install jupyter-book *into that same env*
-    #-----------------------------------------------------------
-    - name: Install Jupyter-Book
-      shell: bash -l {0}
-      run: micromamba install -y jupyter-book
+    # 3 ─ Install everything the notebooks import  ⟵  add matplotlib, scipy …
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        # extra run-time deps used *inside* notebooks
+        pip install matplotlib scipy ipywidgets
 
-    #-----------------------------------------------------------
-    # 4. Build the book (executes all notebooks)
-    #-----------------------------------------------------------
-    - name: Build Jupyter Book
-      shell: bash -l {0}
-      run: jupyter-book build . --keep-going
+    # 4 ─ Build the Jupyter-Book (executes notebooks)
+    - run: jupyter-book build . --keep-going
 
-    #-----------------------------------------------------------
-    # 5. OPTIONAL – copy raw notebooks (and their images)
-    #    so relative links like ./images/foo.jpg still resolve
-    #-----------------------------------------------------------
-    - name: Copy source notebooks into site
-      shell: bash -l {0}
+    # 5 ─ Copy raw notebooks (with their images) into the built site  ⟵  NEW
+    - name: Copy notebooks to site folder
       run: |
         mkdir -p _build/html/notebooks
-        rsync -av --exclude '*~' --exclude '*.ipynb_checkpoints' notebooks/ \
-              _build/html/notebooks/
+        cp -r notebooks/* _build/html/notebooks/
 
-    #-----------------------------------------------------------
-    # 6. Upload the finished _build/html as an artifact
-    #-----------------------------------------------------------
+    # 6 ─ Upload the generated site
     - uses: actions/upload-pages-artifact@v3
       with:
         path: _build/html
@@ -70,5 +49,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-    - id: deployment
-      uses: actions/deploy-pages@v4
+      - id: deployment
+        uses: actions/deploy-pages@v4
