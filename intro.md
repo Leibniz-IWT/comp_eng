@@ -78,6 +78,7 @@ You can now start either jupyter lab or classic notebook or lab
 
 2. **Daily work flow (every time you start a new terminal session)**:
     ```bash
+    git pull  # (in the base directory where you saved the project)
     conda activate compeng  # Reactive the environment
     jupyter lab          # or: jupyter notebook
     ```
@@ -106,14 +107,6 @@ _In the GitHub Desktop app window:_
 3. Run the same commands shown above.
 
 ---
-
-## Updating later (all platforms)
-```bash
-cd comp_eng
-git pull                               # fetch latest notebooks/code
-conda activate compeng
-conda env update -f environment.yml    # refresh dependencies
-```
 
 Choose whichever option fits your workflow and personal taste: Binder for pure cloud environment, conda for local/off-line work.
 
