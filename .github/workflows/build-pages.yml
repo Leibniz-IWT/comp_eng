@@ -7,22 +7,61 @@ on:
 permissions:
   contents: read
   pages: write
-  id-token: write         # required by actions/deploy-pages
+  id-token: write           # required by actions/deploy-pages
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install -r requirements.txt && pip install jupyter-book
-      - run: jupyter-book build . --keep-going
-      # ✨ upload the generated site as an artifact
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _build/html
+    #-----------------------------------------------------------
+    # 1. Check out the repo
+    #-----------------------------------------------------------
+    - uses: actions/checkout@v4
+
+    #-----------------------------------------------------------
+    # 2. Set up a Python env that matches Binder
+    #    (choose the file you actually maintain)
+    #-----------------------------------------------------------
+    - uses: mamba-org/setup-micromamba@v1          # faster than conda
+      with:
+        environment-file: binder/environment.yml   # OR binder/requirements.txt
+        create-args: >-
+          pip                                        # add pip so jupyter-book
+        cache-downloads: true
+        cache-env: true
+
+    #-----------------------------------------------------------
+    # 3. Install jupyter-book *into that same env*
+    #-----------------------------------------------------------
+    - name: Install Jupyter-Book
+      shell: bash -l {0}
+      run: micromamba install -y jupyter-book
+
+    #-----------------------------------------------------------
+    # 4. Build the book (executes all notebooks)
+    #-----------------------------------------------------------
+    - name: Build Jupyter Book
+      shell: bash -l {0}
+      run: jupyter-book build . --keep-going
+
+    #-----------------------------------------------------------
+    # 5. OPTIONAL – copy raw notebooks (and their images)
+    #    so relative links like ./images/foo.jpg still resolve
+    #-----------------------------------------------------------
+    - name: Copy source notebooks into site
+      shell: bash -l {0}
+      run: |
+        mkdir -p _build/html/notebooks
+        rsync -av --exclude '*~' --exclude '*.ipynb_checkpoints' notebooks/ \
+              _build/html/notebooks/
+
+    #-----------------------------------------------------------
+    # 6. Upload the finished _build/html as an artifact
+    #-----------------------------------------------------------
+    - uses: actions/upload-pages-artifact@v3
+      with:
+        path: _build/html
 
   deploy:
     needs: build
@@ -31,6 +70,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # ✨ publish the artifact to GitHub Pages
-      - id: deployment
-        uses: actions/deploy-pages@v4
+    - id: deployment
+      uses: actions/deploy-pages@v4
