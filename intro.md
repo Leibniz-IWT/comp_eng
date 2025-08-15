@@ -45,11 +45,13 @@ TAs: TBD
 
 TBD
 
+---
 ## Help with setting up your system, python environments and running these notebooks offline.
 
 ### Running the notebooks
 
-You can run the notebooks in two ways:
+You can run the notebooks in two ways: (1) Binder (fully online, no install needed) or (2) local install with full control.
+
 #### 1. Launch instantly on Binder  🚀  
 
 Click the **“Launch Binder”** badge at the top-right of any page (or the button below).  
@@ -61,42 +63,10 @@ Binder will build a temporary Jupyter-Lab session in the cloud; nothing to insta
 [![Launch on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Leibniz-IWT/comp_eng/main?urlpath=lab/tree/notebooks/01_model-classification.ipynb)
 
 ---
-
 #### 2. Run locally on your system with conda
+##### macOS / Linux — Terminal and Windows — PowerShell
 
-1. **Clone the repository**
-
-   ```bash
-   $ git clone https://github.com/Leibniz-IWT/comp_eng.git
-   $ cd comp_eng
-   ```
-2.  **Set up a local conda environment**
-
-   This repository uses a conda environment to manage dependencies. You can set it up with the following commands:
-
-   ```bash
-   $ conda env create -f environment.yml
-   $ conda activate compeng
-   ```
-
-3. ** Start Jupyter-Lab **
-
-Your browser will open at http://localhost:8888; navigate to the notebooks/ folder and begin with 01_model-classification.ipynb.
-
-4. (Optional) **Updating later:**
-Pull the repo (git pull) and refresh the environment (conda env update -f environment.yml).
-
-   ```bash
-   $ git pull
-   $conda env update -f environment.yml
-   ```
-Choose whichever option fits your workflow—Binder for quick trying, conda for full performance or offline work.
-
-
-## Quick-start (local conda install)
-### macOS / Linux — Terminal and Windows — PowerShell
-
-1. Clone the repository and set up a local conda environment (once-off):
+1. **Clone the repository and set up a local conda environment (once-off)**:
 
    ```bash
     git clone https://github.com/Leibniz-IWT/comp_eng.git
@@ -106,13 +76,19 @@ Choose whichever option fits your workflow—Binder for quick trying, conda for 
     ```
 You can now start either jupyter lab or classic notebook or lab
 
-2. Daily work flow (every time you start a new terminal session):
+2. **Daily work flow (every time you start a new terminal session)**:
     ```bash
     conda activate compeng  # Reactive the environment
     jupyter lab          # or: jupyter notebook
     ```
-Open `http://localhost:8888` and launch **notebooks/01_model-classification.ipynb**.
+Your browser will open at `http://localhost:8888`, then launch **notebooks/01_model-classification.ipynb**.
 
+4. (Optional) **Updating later:**
+Pull the repo (git pull) and refresh the environment (conda env update -f environment.yml).
+
+   ```bash
+   $ git pull
+   $ conda env update -f environment.yml
 
 > **Note:** For every new terminal session you need reactive the environment:  
 > `conda activate compeng` _before_ running Jupyter or you could run into trouble when your system conda reverts to the base environment
@@ -141,7 +117,7 @@ conda env update -f environment.yml    # refresh dependencies
 
 Choose whichever option fits your workflow and personal taste: Binder for pure cloud environment, conda for local/off-line work.
 
-
+---
 ## Nomenclature
 
 In this course, we will use the following notation for variables, vectors, matrices, and functions except where otherwise stated. This is a common notation in engineering and scientific computing, and it is important to be familiar with it as you progress through the course.
