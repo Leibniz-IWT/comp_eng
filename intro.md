@@ -55,7 +55,7 @@ You can run the notebooks in two ways:
 Click the **“Launch Binder”** badge at the top-right of any page (or the button below).  
 Binder will build a temporary Jupyter-Lab session in the cloud; nothing to install on your computer.
 
-> **Tip:** The build takes a couple of minutes, a read-only preview appears first.  
+> **Note:** The build takes a couple of minutes, a read-only preview appears first.  
 > Leave the tab open: your interactive session will load automatically when ready.
 
 [![Launch on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Leibniz-IWT/comp_eng/main?urlpath=lab/tree/notebooks/01_model-classification.ipynb)
@@ -91,6 +91,56 @@ Pull the repo (git pull) and refresh the environment (conda env update -f enviro
    $conda env update -f environment.yml
    ```
 Choose whichever option fits your workflow—Binder for quick trying, conda for full performance or offline work.
+
+
+## Quick-start (local conda install)
+### macOS / Linux — Terminal and Windows — PowerShell
+
+1. Clone the repository and set up a local conda environment (once-off):
+
+   ```bash
+    git clone https://github.com/Leibniz-IWT/comp_eng.git
+    cd comp_eng
+    conda env create -f environment.yml     # creates “compeng”
+    conda activate compeng
+    ```
+You can now start either jupyter lab or classic notebook or lab
+
+2. Daily work flow (every time you start a new terminal session):
+    ```bash
+    conda activate compeng  # Reactive the environment
+    jupyter lab          # or: jupyter notebook
+    ```
+Open `http://localhost:8888` and launch **notebooks/01_model-classification.ipynb**.
+
+
+> **Note:** For every new terminal session you need reactive the environment:  
+> `conda activate compeng` _before_ running Jupyter or you could run into trouble when your system conda reverts to the base environment
+
+---
+
+### Windows — PowerShell / Cmd / Git Bash
+
+In Windows, after installing git, you can either use powershell and follow the instructions above or the GitHub Desktop app:
+
+_In the GitHub Desktop app window:_
+
+1. *File → Clone Repository…* → choose **comp_eng**.  
+2. *Repository → Open in Terminal* (or *Open in Git Bash*).  
+3. Run the same commands shown above.
+
+---
+
+## Updating later (all platforms)
+```bash
+cd comp_eng
+git pull                               # fetch latest notebooks/code
+conda activate compeng
+conda env update -f environment.yml    # refresh dependencies
+```
+
+Choose whichever option fits your workflow and personal taste: Binder for pure cloud environment, conda for local/off-line work.
+
 
 ## Nomenclature
 
