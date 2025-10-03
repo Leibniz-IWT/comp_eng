@@ -14,22 +14,22 @@ Below you’ll find links to each unit's notebook. Each unit is meant to be stud
 
 ## Syllabus
 
-| Unit # | Title & key sub-topics |
-|-----------|-----------------------|
-| **1** | **{doc}`Model classification I – building blocks <notebooks/01_model-classification>`**<br>• Model classification and structure: linear / non-linear, coupled / uncoupled, symmetry, static / dynamic<br>• Conservation rules & force balances |
-| **2** | **{doc}`Model classification II – degrees of freedom <notebooks/02_dof-analysis>`**<br>• DOF analysis & constraints<br>• Determined vs. under-/over-determined problems |
-| **3** | **{doc}`Model classification III – non-linearity & chaos <notebooks/03_chaos>`**<br>• Fixed-, limit-cycle- & chaotic responses (logistic map, Feigenbaum)<br>• Continuum mechanics as “infinite DOF” ⇒ discretisation need |
-| **4** | **{doc}`Simulation I – algebraic systems <notebooks/04_simulation-algebraic>`**<br>• Linear solves (`scipy.linalg.solve`), conditioning & scaling<br>• Non-linear solves (`fsolve`), Jacobians (`sympy`), Hessians & Newton |
-| **5** | **{doc}`Simulation II – ODE / DAE systems <notebooks/05_simulation-ode-dae>`**<br>• Explicit vs. implicit, stiffness, `solve_ivp`<br>• Index-1 differential-algebraic equations |
-| **6** | **{doc}`Simulation III – continuum / PDE intro <notebooks/06_simulation-pde>`**<br>• Method-of-lines; 1-D heat eqn<br>• Coupled PDE systems |
-| **7** | **{doc}`Optimisation I – convex & linear <notebooks/07_optimisation-linear>`**<br>• LP / QP (`scipy.optimize.linprog`)<br>• Linear least-squares<br>• Gradient-descent methods |
-| **8** | **{doc}`Optimisation II – non-linear programming <notebooks/08_optimisation-nonlinear>`**<br>• KKT, trust-region & SQP (`minimize`)<br>• Non-linear least-squares, back-prop, SGD |
-| **9** | **{doc}`Optimisation III – global / derivative-free <notebooks/09_optimisation-global>`**<br>• Derivative-free & black-box methods<br>• Bayesian optimisation, integer & discontinuous variables |
-| **10** | **{doc}`Control I – classical feedback <notebooks/10_control-classical>`**<br>• Loop anatomy, stability margins<br>• P/PI/PD/PID tuning (root-locus & frequency domain) |
-| **11** | **{doc}`Control II – state-space & optimal linear <notebooks/11_control-lqr>`**<br>• LTI form, controllability / observability<br>• LQR, discrete Riccati, Kalman filter, LQG |
+| Unit # | Title & key sub-topics                                                                                                                                                                                                              |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **1** | **{doc}`Model classification I – building blocks <notebooks/01_model-classification>`**<br>• Model classification and structure: <br>• linear vs. non-linear <br>•  coupled vs. uncoupled <br>•  symmetry <br>•  static vs. dynamic |
+| **2** | **{doc}`Model classification II – degrees of freedom <notebooks/02_dof-analysis>`**<br>• DOF analysis & constraints<br>• Determined vs. under-/over-determined problems <br>• Conservation rules & force balances                   |
+| **3** | **{doc}`Model classification III – non-linearity & chaos <notebooks/03_chaos>`**<br>• Fixed-, limit-cycle- & chaotic responses (logistic map, Feigenbaum)<br>• Continuum mechanics as “infinite DOF” ⇒ discretisation need          |
+| **4** | **{doc}`Simulation I – algebraic systems <notebooks/04_simulation-algebraic>`**<br>• Linear solves (`scipy.linalg.solve`), conditioning & scaling<br>• Non-linear solves (`fsolve`), Jacobians (`sympy`), Hessians & Newton         |
+| **5** | **{doc}`Simulation II – ODE / DAE systems <notebooks/05_simulation-ode-dae>`**<br>• Explicit vs. implicit, stiffness, `solve_ivp`<br>• Index-1 differential-algebraic equations                                                     |
+| **6** | **{doc}`Simulation III – continuum / PDE intro <notebooks/06_simulation-pde>`**<br>• Method-of-lines; 1-D heat eqn<br>• Coupled PDE systems                                                                                         |
+| **7** | **{doc}`Optimisation I – convex & linear <notebooks/07_optimisation-linear>`**<br>• LP / QP (`scipy.optimize.linprog`)<br>• Linear least-squares<br>• Gradient-descent methods                                                      |
+| **8** | **{doc}`Optimisation II – non-linear programming <notebooks/08_optimisation-nonlinear>`**<br>• KKT, trust-region & SQP (`minimize`)<br>• Non-linear least-squares, back-prop, SGD                                                   |
+| **9** | **{doc}`Optimisation III – global / derivative-free <notebooks/09_optimisation-global>`**<br>• Derivative-free & black-box methods<br>• Bayesian optimisation, integer & discontinuous variables                                    |
+| **10** | **{doc}`Control I – classical feedback <notebooks/10_control-classical>`**<br>• Loop anatomy, stability margins<br>• P/PI/PD/PID tuning (root-locus & frequency domain)                                                             |
+| **11** | **{doc}`Control II – state-space & optimal linear <notebooks/11_control-lqr>`**<br>• LTI form, controllability / observability<br>• LQR, discrete Riccati, Kalman filter, LQG                                                       |
 | **12** | **{doc}`Control III – model predictive & non-linear control <notebooks/12_control-mpc>`**<br>• Linear & nonlinear MPC, warm-start<br>• Successive linearisation, constraint handling<br>• Intro to SINDy / DMDc for data-driven MPC |
-| **13** | **{doc}`Control IV – reinforcement-learning foundations <notebooks/13_control-rl-foundations>`**<br>• MDPs, value & policy functions<br>• Tabular & deep Q-learning, actor-critic<br>• Safety envelopes & reward shaping |
-| **14** | **{doc}`RL-based orbit station-keeping <notebooks/14_rl-station-keeping>`**<br>• Problem statement & environment definition<br>• Agent training, evaluation, fuel trade-off<br>• Frontiers: hierarchical RL, onboard edge compute |
+| **13** | **{doc}`Control IV – reinforcement-learning foundations <notebooks/13_control-rl-foundations>`**<br>• MDPs, value & policy functions<br>• Tabular & deep Q-learning, actor-critic<br>• Safety envelopes & reward shaping            |
+| **14** | **{doc}`RL-based orbit station-keeping <notebooks/14_rl-station-keeping>`**<br>• Problem statement & environment definition<br>• Agent training, evaluation, fuel trade-off<br>• Frontiers: hierarchical RL, onboard edge compute   |
 
 ## Prerequisites
 
@@ -113,6 +113,7 @@ If you really want to avoid command lines completely, you can also install the e
  2. *Name*: `compeng`
  3. *File*: select `environment.yml` inside the cloned folder
  4. Click **Import** 
+ 5. Open Jupyter Lab or Notebook as you normally would
 
 
 ---
@@ -124,26 +125,31 @@ Choose whichever option fits your workflow and personal taste: Binder for pure c
 
 In this course, we will use the following notation for variables, vectors, matrices, and functions except where otherwise stated. This is a common notation in engineering and scientific computing, and it is important to be familiar with it as you progress through the course.
 
-| Notation | Interpretation                                                                                 |
-|----------|------------------------------------------------------------------------------------------------|
-| $x_i$ | Scalar _static_ variable                                                                       |
-| $\mathbf{x}$ | Column vector of static variables, $\; \mathbf{x}=[x_1,\dots,x_n]^\top$                        |
-| $\mathbf{X}$ | Matrix (rank-2 array) of static quantities, including scalar fields                            |
-| $\mathcal{X}$ | Set or domain in which $\mathbf{x}$ lives (e.g.\ feasible design set)                          |
-| $y_i(t)$, $y_i$ | Scalar _dynamic_ variable (time-dependent); if $t$ is omitted, instantaneous value is implied  |
-| $\mathbf{y}(t)$ | State vector of dynamic variables, $\; \mathbf{y}=[y_1,\dots,y_m]^\top$                        |
-| $\mathbf{Y}$ | Matrix assembled from vectors $\mathbf{y}(t)$ (e.g.\ trajectory snapshots)                     |
-| $\mathcal{Y}$ | Set of admissible trajectories or outputs                                                      |
-| $a_i$ | Scalar coefficient (always known fixed values)                                                 |
-| $\mathbf{a}$ | Vector of coefficients                                                                         |
-| $\mathbf{A}$ | Coefficient matrix in a linear system $\mathbf{A}\mathbf{x}=\mathbf{b}$                        |
-| $p_i$ | Scalar _parameter_ (fixed but possibly uncertain, e.g. found by solving optimization problems) |
-| $\mathbf{p}$ | Parameter vector                                                                               |
-| $\mathbf{P}$ | Parameter matrix (if parameters are organised in matrix form)                                  |
-| $f(\cdot)$ | Scalar-valued function (mapping $f: \mathbb{R}^n\!\to\!\mathbb{R}$)                            |
-| $\mathbf{f}(\cdot)$ | Vector-valued mapping (e.g.\ residual $\mathbf{f}:\mathbb{R}^n\!\to\!\mathbb{R}^n$)            |
-
-
+| Notation                 | Interpretation                                                                                                                                       |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $x_i$                    | Scalar _static_ variable                                                                                                                             |
+| $\mathbf{x}$             | Column vector of static variables, $\; \mathbf{x}=[x_1,\dots,x_n]^\top$                                                                              |
+| $\mathbf{X}$             | Matrix (rank-2 array) of static quantities, including scalar fields                                                                                  |
+| $\mathcal{X}$            | Set or domain in which $\mathbf{x}$ lives (e.g. feasible design set)                                                                                 |
+| $y_i(t)$, $y_i$          | Scalar _dynamic_ variable (time-dependent); if $t$ is omitted, instantaneous value is implied                                                        |
+| $\mathbf{y}(t)$          | State vector of dynamic variables, $\; \mathbf{y}=[y_1,\dots,y_m]^\top$                                                                              |
+| $\mathbf{Y}$             | Matrix assembled from vectors $\mathbf{y}(t)$ (e.g. trajectory snapshots)                                                                            |
+| $\mathcal{Y}$            | Set of dynamic variables (e.g. admissible trajectories or outputs)                                                                                   |
+| $a_i$                    | Scalar coefficient (always known fixed values)                                                                                                       |
+| $\mathbf{a}$             | Vector of coefficients                                                                                                                               |
+| $\mathbf{A}$             | Coefficient matrix in a linear system $\mathbf{A}\mathbf{x}=\mathbf{b}$                                                                              |
+| $p_i$                    | Scalar _parameter_ (fixed but possibly uncertain, e.g. found by solving optimization problems)                                                       |
+| $\mathbf{p}$             | Parameter vector                                                                                                                                     |
+| $\mathbf{P}$             | Parameter matrix (if parameters are organised in matrix form)                                                                                        |
+| $\mathcal{P}$            | Parameter set (e.g. an optimization domain)                                                                                                          |
+| $u_i$                    | Scalar _input_ (known value acting as input to a system, often by an operator or control actuator)                                                   |
+| $\mathbf{u}$             | Vector of input values or functions                                                                                                                  |
+| $\mathbf{U}$             | Input matrix (if inputs are organised in matrix form)                                                                                                |
+| $\mathcal{P}$            | Input set (e.g. a domain defining actuator input limits)                                                                                             |
+| $f(\cdot)$               | Scalar-valued function (mapping $f: \mathbb{R}^n\!\to\!\mathbb{R}$)                                                                                  |
+| $\mathbf{f}(\cdot)$      | Vector-valued mapping (e.g. residual $\mathbf{f}:\mathbb{R}^n\!\to\!\mathbb{R}^n$)                                                                   |
+| $\mathbf{F}(\mathbf{X})$ | Algebraic system such as a vector of functions   (e.g. $\[ \mathbf{f}_1(\mathbf{x}), \mathbf{f}_2(\mathbf{x}), \dots. \mathbf{f}_n(\mathbf{x}) \]$ ) |
+| $\mathcal{F})$           | Set of mappings (e.g. solution domain of a set of PDE equations)                                                                                     |
 
 ```{contents}
 :local:
