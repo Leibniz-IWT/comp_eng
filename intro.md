@@ -125,31 +125,31 @@ Choose whichever option fits your workflow and personal taste: Binder for pure c
 
 In this course, we will use the following notation for variables, vectors, matrices, and functions except where otherwise stated. This is a common notation in engineering and scientific computing, and it is important to be familiar with it as you progress through the course.
 
-| Notation                 | Interpretation                                                                                                                                       |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $x_i$                    | Scalar _static_ variable                                                                                                                             |
-| $\mathbf{x}$             | Column vector of static variables, $\; \mathbf{x}=[x_1,\dots,x_n]^\top$                                                                              |
-| $\mathbf{X}$             | Matrix (rank-2 array) of static quantities, including scalar fields                                                                                  |
-| $\mathcal{X}$            | Set or domain in which $\mathbf{x}$ lives (e.g. feasible design set)                                                                                 |
-| $y_i(t)$, $y_i$          | Scalar _dynamic_ variable (time-dependent); if $t$ is omitted, instantaneous value is implied                                                        |
-| $\mathbf{y}(t)$          | State vector of dynamic variables, $\; \mathbf{y}=[y_1,\dots,y_m]^\top$                                                                              |
-| $\mathbf{Y}$             | Matrix assembled from vectors $\mathbf{y}(t)$ (e.g. trajectory snapshots)                                                                            |
-| $\mathcal{Y}$            | Set of dynamic variables (e.g. admissible trajectories or outputs)                                                                                   |
-| $a_i$                    | Scalar coefficient (always known fixed values)                                                                                                       |
-| $\mathbf{a}$             | Vector of coefficients                                                                                                                               |
-| $\mathbf{A}$             | Coefficient matrix in a linear system $\mathbf{A}\mathbf{x}=\mathbf{b}$                                                                              |
-| $p_i$                    | Scalar _parameter_ (fixed but possibly uncertain, e.g. found by solving optimization problems)                                                       |
-| $\mathbf{p}$             | Parameter vector                                                                                                                                     |
-| $\mathbf{P}$             | Parameter matrix (if parameters are organised in matrix form)                                                                                        |
-| $\mathcal{P}$            | Parameter set (e.g. an optimization domain)                                                                                                          |
-| $u_i$                    | Scalar _input_ (known value acting as input to a system, often by an operator or control actuator)                                                   |
-| $\mathbf{u}$             | Vector of input values or functions                                                                                                                  |
-| $\mathbf{U}$             | Input matrix (if inputs are organised in matrix form)                                                                                                |
-| $\mathcal{P}$            | Input set (e.g. a domain defining actuator input limits)                                                                                             |
-| $f(\cdot)$               | Scalar-valued function (mapping $f: \mathbb{R}^n\!\to\!\mathbb{R}$)                                                                                  |
-| $\mathbf{f}(\cdot)$      | Vector-valued mapping (e.g. residual $\mathbf{f}:\mathbb{R}^n\!\to\!\mathbb{R}^n$)                                                                   |
-| $\mathbf{F}(\mathbf{X})$ | Algebraic system such as a vector of functions   (e.g. $\[ \mathbf{f}_1(\mathbf{x}), \mathbf{f}_2(\mathbf{x}), \dots. \mathbf{f}_n(\mathbf{x}) \]$ ) |
-| $\mathcal{F})$           | Set of mappings (e.g. solution domain of a set of PDE equations)                                                                                     |
+| Notation                 | Interpretation                                                                                                                                      |
+|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| $x_i$                    | Scalar _static_ variable                                                                                                                            |
+| $\mathbf{x}$             | Column vector of static variables, $\; \mathbf{x}=[x_1,\dots,x_n]^\top$                                                                             |
+| $\mathbf{X}$             | Matrix (rank-2 array) of static quantities, including scalar fields                                                                                 |
+| $\mathcal{X}$            | Set or domain in which $\mathbf{x}$ lives (e.g. feasible design set)                                                                                |
+| $y_i(t)$, $y_i$          | Scalar _dynamic_ variable (time-dependent); if $t$ is omitted, instantaneous value is implied                                                       |
+| $\mathbf{y}(t)$          | State vector of dynamic variables, $\; \mathbf{y}=[y_1,\dots,y_m]^\top$                                                                             |
+| $\mathbf{Y}$             | Matrix assembled from vectors $\mathbf{y}(t)$ (e.g. trajectory snapshots)                                                                           |
+| $\mathcal{Y}$            | Set of dynamic variables (e.g. admissible trajectories or outputs)                                                                                  |
+| $a_i$                    | Scalar coefficient (always known fixed values)                                                                                                      |
+| $\mathbf{a}$             | Vector of coefficients                                                                                                                              |
+| $\mathbf{A}$             | Coefficient matrix in a linear system $\mathbf{A}\mathbf{x}=\mathbf{b}$                                                                             |
+| $p_i$                    | Scalar _parameter_ (fixed but possibly uncertain, e.g. found by solving optimization problems)                                                      |
+| $\mathbf{p}$             | Parameter vector                                                                                                                                    |
+| $\mathbf{P}$             | Parameter matrix (if parameters are organised in matrix form)                                                                                       |
+| $\mathcal{P}$            | Parameter set (e.g. an optimization domain)                                                                                                         |
+| $u_i$                    | Scalar _input_ (known value acting as input to a system, often by an operator or control actuator)                                                  |
+| $\mathbf{u}$             | Vector of input values or functions                                                                                                                 |
+| $\mathbf{U}$             | Input matrix (if inputs are organised in matrix form)                                                                                               |
+| $\mathcal{P}$            | Input set (e.g. a domain defining actuator input limits)                                                                                            |
+| $f(\cdot)$               | Scalar-valued function (mapping $f: \mathbb{R}^n\!\to\!\mathbb{R}$)                                                                                 |
+| $\mathbf{f}(\cdot)$      | Vector-valued mapping (e.g. residual $\mathbf{f}:\mathbb{R}^n\!\to\!\mathbb{R}^n$)                                                                  |
+| $\mathbf{F}(\mathbf{X})$ | Algebraic system such as a vector of functions   (e.g. $[ \mathbf{f}_1(\mathbf{x}), \mathbf{f}_2(\mathbf{x}), \dots. \mathbf{f}_n(\mathbf{x}) ]$ ) |
+| $\mathcal{F})$           | Set of mappings (e.g. solution domain of a set of PDE equations)                                                                                    |
 
 ```{contents}
 :local:
