@@ -2,3 +2,4 @@ jupyter-book>=1.0
 myst-nb
 numpy
 scipy
+sympy
