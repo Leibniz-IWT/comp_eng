@@ -39,11 +39,12 @@ Students for this course are expected to have a foundation undergraduate enginee
 
 Instructor contact information:
 
-TAs: TBD
+Stefan Endres (s.endres@iwt.uni-bremen.de)
+Lutz Mädler (lmaedler@iwt.uni-bremen.de)
 
 ## Grading policy 
 
-TBD
+The final grade for this course is based on an oral exam at the end of the semester where you will present a project of your choice that applies the methods learned in this course. The project has to be done individually and present a unique solution. The oral exam will assess your understanding of the computational methods covered in the course and your ability to apply them to solve engineering problems.
 
 ---
 ## Help with setting up your system, python environments and running these notebooks offline.
