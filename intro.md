@@ -79,6 +79,7 @@ You can now start either jupyter lab or classic notebook, then every time you wo
 
 2. **Daily work flow (every time you start a new terminal session)**:
     ```bash
+    # First navigate to the project folder where you cloned the repository using `cd path/to/comp_eng`
     git pull  # (in the base directory where you saved the project)
     conda activate compeng  # Reactive the environment
     jupyter lab          # or: jupyter notebook
