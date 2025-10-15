@@ -83,6 +83,7 @@ You can now start either jupyter lab or classic notebook, then every time you wo
     git pull  # (in the base directory where you saved the project)
     conda activate compeng  # Reactive the environment
     jupyter lab          # or: jupyter notebook
+    # Once jupyter lab/notebook is running, open the notebook you want to work on
     ```
 Your browser will open at `http://localhost:8888`, then launch for e.g. **notebooks/01_model-classification.ipynb**.
 

@@ -23,3 +23,4 @@ Run `conda env create -f environment.yml`.
    git push origin main
    ```
 6. The changes will be automatically reflected on the GitHub pages site.
+
