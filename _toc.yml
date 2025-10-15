@@ -13,7 +13,7 @@ chapters:
     title: "3  Model classification III – non-linearity & chaos"
 
   - file: notebooks/03_tutorials-model_class
-    title: "Model classification III – Exercises"
+    title: "Tutorial: Model Classification"
 
   - file: notebooks/04_simulation-algebraic
     title: "4  Simulation I – algebraic systems"
