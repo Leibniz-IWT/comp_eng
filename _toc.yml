@@ -24,6 +24,9 @@ chapters:
   - file: notebooks/06_simulation-pde
     title: "6  Simulation III – continuum / PDE intro"
 
+  - file: notebooks/06_tutorials-simulation
+    title: "Tutorial: Simulation"
+
   - file: notebooks/07_optimisation-linear
     title: "7  Optimisation I – convex & linear"
 
