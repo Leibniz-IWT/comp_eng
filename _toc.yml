@@ -33,10 +33,10 @@ chapters:
   - file: notebooks/08_optimisation-nonlinear
     title: "8  Optimization II – non-linear programming"
 
-  - file: notebooks/09_tutorials-optimization
+  - file: notebooks/09_optimisation-global
     title: "9  Optimization III – global / derivative-free"
 
-  - file: notebooks/06_tutorials-simulation
+  - file: notebooks/09_tutorials-optimization
     title: "Tutorial: Optimization"
 
   - file: notebooks/10_control-classical
