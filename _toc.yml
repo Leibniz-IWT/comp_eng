@@ -28,13 +28,16 @@ chapters:
     title: "Tutorial: Simulation"
 
   - file: notebooks/07_optimisation-linear
-    title: "7  Optimisation I – convex & linear"
+    title: "7  Optimization I – convex & linear"
 
   - file: notebooks/08_optimisation-nonlinear
-    title: "8  Optimisation II – non-linear programming"
+    title: "8  Optimization II – non-linear programming"
 
-  - file: notebooks/09_optimisation-global
-    title: "9  Optimisation III – global / derivative-free"
+  - file: notebooks/09_tutorials-optimization
+    title: "9  Optimization III – global / derivative-free"
+
+  - file: notebooks/06_tutorials-simulation
+    title: "Tutorial: Optimization"
 
   - file: notebooks/10_control-classical
     title: "10  Control I – classical feedback"
