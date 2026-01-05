@@ -12,6 +12,8 @@ dependencies:
   - sympy
   - gymnasium
   - pip
+  - scikit-learn
+  - control
   - pip:
       #- jupyter-book>=1.0.0
       - jupyter-book<2.0
