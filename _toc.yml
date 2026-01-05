@@ -53,3 +53,6 @@ chapters:
 
   - file: notebooks/14_rl-station-keeping
     title: "14  RL-based orbit station-keeping"
+
+  - file: notebooks/14_tutorials-control
+    title: "Tutorial: Control"
