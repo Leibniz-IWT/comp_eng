@@ -4,3 +4,4 @@ myst-nb
 numpy
 scipy
 sympy
+control
