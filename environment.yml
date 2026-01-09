@@ -13,6 +13,7 @@ dependencies:
   - gymnasium
   - pip
   - scikit-learn
+  - pandas
   - control
   - pip:
       #- jupyter-book>=1.0.0
