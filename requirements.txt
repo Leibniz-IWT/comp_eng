@@ -5,3 +5,4 @@ numpy
 scipy
 sympy
 control
+pandas
