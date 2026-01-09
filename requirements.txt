@@ -6,3 +6,4 @@ scipy
 sympy
 control
 pandas
+scikit-learn
