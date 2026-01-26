@@ -44,7 +44,11 @@ Lutz Mädler (lmaedler@iwt.uni-bremen.de)
 
 ## Grading policy 
 
-The final grade for this course is based on an oral exam at the end of the semester where you will present a project of your choice that applies the methods learned in this course. The project has to be done individually and present a unique solution. The oral exam will assess your understanding of the computational methods covered in the course and your ability to apply them to solve engineering problems.
+The final grade for this course is based on an oral exam at the end of the semester where you will present a project of your choice that applies the methods learned in this course. The project has to be done individually and present a unique solution. The oral exam will assess your understanding of the computational methods covered in the course and your ability to apply them to solve engineering problems. 
+
+## AI policy 
+
+It is allowed and encouraged to use LLMs for code generation and report generation as long as you fully understand everything you use (you are only assessed for your knowledge and ability to use computation methods to solve engineering problems, coding skills are not assessed although some skill is needed to connect all your solutions to solve problems in the final project). Only your presentation, quality of solutions and understanding will be assessed in the final exam. 
 
 ---
 ## Help with setting up your system, python environments and running these notebooks offline.
