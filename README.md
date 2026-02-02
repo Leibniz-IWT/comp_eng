@@ -24,3 +24,14 @@ Run `conda env create -f environment.yml`.
    ```
 6. The changes will be automatically reflected on the GitHub pages site.
 
+# Launch Individual Notebooks in Colab
+
+For the Unit 14 project (RL-based orbit station-keeping):
+- [RL Station Keeping Handout](https://colab.research.google.com/github/Leibniz-IWT/comp_eng/blob/main/RL_Station_Keeping_Handout.ipynb)
+- [RL Station Keeping Solution](https://colab.research.google.com/github/Leibniz-IWT/comp_eng/blob/main/RL_Station_Keeping_Solution.ipynb)
+- [Sub-Problem 1](https://colab.research.google.com/github/Leibniz-IWT/comp_eng/blob/main/RL_Station_Sub_Problem_1.ipynb)
+- [Sub-Problem 2](https://colab.research.google.com/github/Leibniz-IWT/comp_eng/blob/main/RL_Station_Sub_Problem_2.ipynb)
+
+For the full course (all 14 units):
+- [Open Unit 1 in Colab](https://colab.research.google.com/github/Leibniz-IWT/comp_eng/blob/main/notebooks/01_model-classification.ipynb)
+[Incomplete - add links for all units]
