@@ -23,7 +23,7 @@ This leaderboard shows validated student submissions for the final course projec
 Only submissions manually verified by the instructor are listed.  
 Students should submit via the designated channel (Google Form / email) including:  
 - Link to your notebook/Colab (publicly viewable)  
-- Model files (shareable Drive folder or GitHub release)  
+- Model files (shareable Nexcloud or Drive folder or GitHub release)  
 - Self-reported metrics and a short description
 
 | Rank | Model name                  | Score                              | Days in orbit | Fuel mass remaining (kg) | Notes                          |
