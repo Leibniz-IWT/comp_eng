@@ -57,5 +57,8 @@ chapters:
   - file: notebooks/14_tutorials-control
     title: "Tutorial: Control"
 
+  - file: leaderboard
+  title: "Project Leaderboard – RL Orbit Station-Keeping"
+
   - file: notebooks/15_com_eng_feature-selection
     title: "15 Special Topic: Feature Analysis for Hot Strip Mill Process Optimization"
