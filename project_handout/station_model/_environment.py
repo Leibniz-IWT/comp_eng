@@ -371,8 +371,8 @@ def run_simulation(env, policy, num_steps=25920, plot_results=True):
         step += 1
 
     # Calculate reward
-    print(f'Days in orbit: {data['times'][-1]/24} days')
-    print(f'Fuel mass remaining: {data['fuels'][-1]} kg')
+    print(f"Days in orbit: {data['times'][-1]/24} days")
+    print(f"Fuel mass remaining: {data['fuels'][-1]} kg")
     score = (2 * data['times'][-1]/24)**2 + data['fuels'][-1]**2
     print(f'Score = {score }')
     if plot_results:
