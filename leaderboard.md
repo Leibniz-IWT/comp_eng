@@ -26,9 +26,9 @@ Students should submit via the designated channel (Google Form / email) includin
 - Model files (shareable Nexcloud or Drive folder or GitHub release)  
 - Self-reported metrics and a short description
 
-| Rank | Model name                  | Score                              | Days in orbit | Fuel mass remaining (kg) | Notes                          |
-|------|-----------------------------|------------------------------------|---------------|---------------------------|--------------------------------|
-| –    | –                           | –                                  | –             | –                         | –                              |
+| Rank | Model name                  | Score                           | Days in orbit | Fuel mass remaining (kg) | Notes                          |
+|------|-----------------------------|---------------------------------|---------------|---------------------------|--------------------------------|
+| 1.   |  Red_Falcon_V5              | 213529.6644028123               |180.0 days            | 289.71 kg                         | –                              |
 
 <script>
 // Client-side sorting: click column headers (Score, Days in orbit, Fuel mass remaining)
