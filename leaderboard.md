@@ -28,8 +28,8 @@ Students should submit via the designated channel (Google Form / email) includin
 
 | Rank | Model name                  | Score                           | Days in orbit | Fuel mass remaining (kg) | Notes                          |
 |------|-----------------------------|---------------------------------|---------------|---------------------------|--------------------------------|
-| 1.   |  Return_to_Sender_v16      | 235598.18129603358               |180.0 days            | 325.5736188575997 kg              | –                              |
-| 2.   |  Red_Falcon_V5              | 213529.6644028123               |180.0 days            | 289.71 kg                         | –                              |
+| 1.   | Return_to_Sender_v16        | 235598.18129603358              |180.0 days     | 325.5736188575997 kg              | –                              |
+| 2.   | Red_Falcon_V5               | 213529.6644028123               |180.0 days     | 289.71 kg                         | –                              |
 
 <script>
 // Client-side sorting: click column headers (Score, Days in orbit, Fuel mass remaining)
