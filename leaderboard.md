@@ -26,10 +26,11 @@ Students should submit via the designated channel (Google Form / email) includin
 - Model files (shareable Nexcloud or Drive folder or GitHub release)  
 - Self-reported metrics and a short description
 
-| Rank | Model name                  | Score                           | Days in orbit | Fuel mass remaining (kg) | Notes                          |
-|------|-----------------------------|---------------------------------|---------------|---------------------------|--------------------------------|
-| 1.   | Return_to_Sender_v16        | 235598.18129603358              |180.0 days     | 325.5736188575997 kg              | –                              |
-| 2.   | Red_Falcon_V5               | 213529.6644028123               |180.0 days     | 289.71 kg                         | –                              |
+| Rank | Model name                   | Score                 | Days in orbit | Fuel mass remaining (kg) | Notes                          |
+|------|------------------------------|-----------------------|---------------|---------------------------|--------------------------------|
+| 1.   | Return_to_Sender_v16         | 235598.18129603358    |180.0 days     | 325.5736188575997 kg              | –                              |
+| 2.   | Houston_We_Have_No_Problem   | 223453.60             |180.0 days     | 306.35 kg             | –                              |
+| 3.   | Red_Falcon_V5                | 213529.6644028123     |180.0 days     | 289.71 kg                         | –                              |
 
 <script>
 // Client-side sorting: click column headers (Score, Days in orbit, Fuel mass remaining)
