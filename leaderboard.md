@@ -27,10 +27,11 @@ Students should submit via the designated channel (Google Form / email) includin
 - Self-reported metrics and a short description
 
 | Rank | Model name                   | Score                 | Days in orbit | Fuel mass remaining (kg) | Notes                          |
-|------|------------------------------|-----------------------|---------------|---------------------------|--------------------------------|
-| 1.   | Return_to_Sender_v16         | 235598.18129603358    |180.0 days     | 325.5736188575997 kg              | –                              |
-| 2.   | Houston_We_Have_No_Problem   | 223453.60             |180.0 days     | 306.35 kg             | –                              |
-| 3.   | Red_Falcon_V5                | 213529.6644028123     |180.0 days     | 289.71 kg                         | –                              |
+|------|------------------------------|-----------------------|---------------|-------------------------|--------------------------------|
+| 1.   | Return_to_Sender_v16         | 235598.18129603358    |180.0 days     | 325.57 kg     | –                              |
+| 2.   | Houston_We_Have_A_Lot_Of_Problems   | 232811.6211   |180.0 days     | 321.27 kg               | –                              |
+| 3.   | Houston_We_Have_No_Problem   | 223453.60             |180.0 days     | 306.35 kg               | –                              |
+|4.   | Red_Falcon_V5                | 213529.6644028123     |180.0 days     | 289.71 kg               | –                              |
 
 <script>
 // Client-side sorting: click column headers (Score, Days in orbit, Fuel mass remaining)
