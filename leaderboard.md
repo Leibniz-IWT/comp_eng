@@ -28,7 +28,6 @@ Students should submit via the designated channel (Google Form / email) includin
 
 | Rank | Model name                   | Score                 | Days in orbit | Fuel mass remaining (kg) | Notes                          |
 |------|------------------------------|-----------------------|---------------|-------------------------|--------------------------------|
-
 | 1. | I_Am_Really_Done_ok                 | 238316.09242013458    |180.0 days     | 329.72 kg     | Used PPO with custom reward shaping featuring an altitude deadzone (5km) for fuel efficiency and an alignment penalty for integrated control. The agent acts as a numerical decoupler for the hierarchical control scheme in Sub-Problem 3.                              |
 | 2. | Return_to_Sender_v16                | 235598.18129603358    |180.0 days     | 325.57 kg     | –                              |
 | 3. | Houston_We_Have_A_Lot_Of_Problems   | 232811.6211           |180.0 days     | 321.27 kg      | Minimal change in PPO agent hyperparameters                              |
