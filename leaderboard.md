@@ -26,15 +26,17 @@ Students should submit via the designated channel (Google Form / email) includin
 - Model files (shareable Nexcloud or Drive folder or GitHub release)  
 - Self-reported metrics and a short description
 
-| Rank | Model name                   | Score                 | Days in orbit | Fuel mass remaining (kg) | Notes                          |
-|------|------------------------------|-----------------------|---------------|-------------------------|--------------------------------|
-| 1. | I_Am_Really_Done_ok                 | 238316.09242013458    |180.0 days     | 329.72 kg     | Used PPO with custom reward shaping featuring an altitude deadzone (5km) for fuel efficiency and an alignment penalty for integrated control. The agent acts as a numerical decoupler for the hierarchical control scheme in Sub-Problem 3.                              |
-| 2. | Return_to_Sender_v16                | 235598.18129603358    |180.0 days     | 325.57 kg     | –                              |
-| 3. | Houston_We_Have_A_Lot_Of_Problems   | 232811.6211           |180.0 days     | 321.27 kg      | Minimal change in PPO agent hyperparameters                              |
-| 4. | CMπF_The_End                        | 226888.9319445231     |180.0 days     | 311.91 kg      | Minimal change in PPO agent hyperparameters                              |
-| 5. | Houston_We_Have_No_Problem          | 223453.60             |180.0 days     | 306.35 kg     | –                              |
-| 6. | Red_Falcon_V5                       | 213529.6644028123     |180.0 days     | 289.71 kg     | –                              |
-| 7. | minimum_effort_v2                   | 19265.44             |180.0 days     | 0.0 kg     | Minimum passing grade as defined by the rules |
+| Rank | Model name                        | Score                  | Days in orbit    | Fuel mass remaining (kg) | Notes                          |
+|------|-----------------------------------|------------------------|------------------|--------------------------|--------------------------------|
+| 1.   | I_Am_Really_Done_ok               | 238316.09242013458     | 180.0 days       | 329.72 kg                | Used PPO with custom reward shaping featuring an altitude deadzone (5km) for fuel efficiency and an alignment penalty for integrated control. The agent acts as a numerical decoupler for the hierarchical control scheme in Sub-Problem 3.                              |
+| 2.   | Return_to_Sender_v16              | 235598.18129603358     | 180.0 days       | 325.57 kg                | –                              |
+| 3.   | Fawkes V18                        | 233299.97598548885     | 180.0 days       | 322.03 kg                | –                              |
+| 4.   | Houston_We_Have_A_Lot_Of_Problems | 232811.6211            | 180.0 days       | 321.27 kg                | Minimal change in PPO agent hyperparameters                              |
+| 5.   | CMπF_The_End                      | 226888.9319445231      | 180.0 days       | 311.91 kg                | Minimal change in PPO agent hyperparameters                              |
+| 6.   | Houston_We_Have_No_Problem        | 223453.60              | 180.0 days       | 306.35 kg                | –                              |
+| 7.   | Red_Falcon_V5                     | 213529.6644028123      | 180.0 days       | 289.71 kg                | –                              |
+| 8.   | minimum_effort_v2                 | 19265.44               | 180.0 days       | 0.0 kg                   | Minimum passing grade as defined by the rules |
+
 
 
 <script>
