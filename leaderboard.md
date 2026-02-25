@@ -42,9 +42,6 @@ Students should submit via the designated channel (Google Form / email) includin
 | 12.  | minimum_effort_v2                 | 19265.44           | 180.0 days       | 0.0 kg                   | Minimum passing grade as defined by the rules                                                                                                                                                                                                                        |
 
 
-
-maximum_effort_v3
-
 This project presents a hybrid control architecture that merges classical engineering with Reinforcement Learning (PPO). The system uses an optimised low-level classical controller (featuring a feedforward decoupler and a 0.5° deadzone) to manage attitude stability and eliminate thruster jitter. Meanwhile, the trained PPO agent handles high-level altitude maintenance using a fuel-efficient "Pulse-Glide" strategy, successfully sustaining the orbit for the full 6-month requirement.
 PS: I have done Subtask 3 and Subtask 5 in the same notebook "Fawkes_Subtask3". And I have already submitted the major task before (already on Leaderboard), i just wanted to submit all the files together in one email.
 
