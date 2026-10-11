@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
 from scipy.integrate import solve_ivp
+from scipy.linalg import expm
 
 
 def _lti_rhs(_t: float, y: np.ndarray, A: np.ndarray, B: np.ndarray, u: np.ndarray) -> np.ndarray:
@@ -32,6 +33,19 @@ def plot_states(
     return ax
 
 
+def _output_axes(t: np.ndarray, z: np.ndarray, title: str, label: str | None, ax: Axes | None) -> Axes:
+    """Plot the output z(t) on a new figure, or add it to ax (keeping its title); legend if labelled."""
+    if ax is None:
+        _, ax = plt.subplots()
+        ax.set_xlabel("Time [s]")
+        ax.set_ylabel("Output $z$")
+        ax.set_title(title)
+    ax.plot(t, z, label=label)
+    if label is not None:
+        ax.legend()
+    return ax
+
+
 def plot_step_response(
     A: np.ndarray,
     C: np.ndarray,
@@ -39,8 +53,10 @@ def plot_step_response(
     D: np.ndarray | None = None,
     title: str = "Step Response",
     t_end: float = 10,
+    label: str | None = None,
+    ax: Axes | None = None,
 ) -> Axes:
-    """Simulate the unit-step response of an LTI system from y(0) = 0 and plot its output z(t)."""
+    """Simulate the unit-step response of an LTI system from y(0) = 0 and plot z(t); pass ax to overlay."""
     B = np.array([[0], [1]]) if B is None else B
     D = np.array([[0]]) if D is None else D
     t_eval = np.linspace(0, t_end, 100)
@@ -51,12 +67,22 @@ def plot_step_response(
 
     sol = solve_ivp(state_eq, [0, t_end], np.zeros(A.shape[0]), t_eval=t_eval)
     z = (C @ sol.y + D @ u_values)[0]
-    _, ax = plt.subplots()
-    ax.plot(sol.t, z)
-    ax.set_xlabel("Time [s]")
-    ax.set_ylabel("Output $z$")
-    ax.set_title(title)
-    return ax
+    return _output_axes(sol.t, z, title, label, ax)
+
+
+def plot_free_response(
+    A: np.ndarray,
+    C: np.ndarray,
+    y0: Sequence[float],
+    title: str = "Free Response",
+    t_end: float = 10,
+    label: str | None = None,
+    ax: Axes | None = None,
+) -> Axes:
+    """Plot the unforced output z(t) = C e^{At} y(0) (u = 0) from the initial state y0; pass ax to overlay."""
+    t = np.linspace(0, t_end, 200)
+    z = np.array([C @ expm(A * ti) @ np.asarray(y0, float) for ti in t])[:, 0]
+    return _output_axes(t, z, title, label, ax)
 
 
 def plot_decoupler_comparison(

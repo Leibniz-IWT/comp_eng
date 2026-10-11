@@ -64,30 +64,22 @@ def plot_brute_force_1d(x: np.ndarray, y: np.ndarray, x_min: float, y_min: float
 
 def plot_brute_force_2d(
     f: Callable[[np.ndarray, np.ndarray], np.ndarray],
-    X1: np.ndarray, X2: np.ndarray, Z: np.ndarray,
+    X1: np.ndarray, X2: np.ndarray,
     x1_min: float, x2_min: float, z_min: float,
-) -> tuple[Axes, Axes]:
-    """Show the grid samples and the best one on a 3D surface and on a contour plot."""
+) -> Axes:
+    """Show the grid samples and the best one on a contour plot of f."""
     X1d, X2d = np.meshgrid(np.linspace(X1.min(), X1.max(), 100), np.linspace(X2.min(), X2.max(), 100))
-    Zd = f(X1d, X2d)
-    fig = plt.figure(figsize=(11.0, 5.0))
-    ax3d = fig.add_subplot(1, 2, 1, projection="3d")
-    ax3d.plot_surface(X1d, X2d, Zd, cmap="viridis", alpha=0.7)
-    ax3d.scatter(X1.ravel(), X2.ravel(), Z.ravel(), color="gray", alpha=0.5, s=10)
-    ax3d.scatter(x1_min, x2_min, z_min, color="red", s=60)
-    ax3d.set(xlabel="$x_1$", ylabel="$x_2$", zlabel="$f(x_1, x_2)$")
-    ax3d.set_box_aspect(None, zoom=0.85)
-    ax2d = fig.add_subplot(1, 2, 2)
-    ax2d.contourf(X1d, X2d, Zd, levels=20, cmap="viridis", alpha=0.7)
-    ax2d.scatter(X1, X2, color="gray", s=12, label="Sampled Points")
-    ax2d.scatter(
+    fig, ax = plt.subplots(figsize=(6.5, 5.4))
+    cs = ax.contourf(X1d, X2d, f(X1d, X2d), levels=20, cmap="viridis", alpha=0.7)
+    fig.colorbar(cs, ax=ax, label="$f(x_1, x_2)$")
+    ax.scatter(X1, X2, color="gray", s=12, label="Sampled Points")
+    ax.scatter(
         x1_min, x2_min, color="red", s=80, zorder=3,
         label=f"Minimum at ({x1_min:.2f}, {x2_min:.2f}), f={z_min:.2f}",
     )
-    ax2d.set(xlabel="$x_1$", ylabel="$x_2$", aspect="equal")
+    ax.set(xlabel="$x_1$", ylabel="$x_2$", aspect="equal", title="Brute Force Search on 2D Quadratic Function")
     fig.legend(loc="outside lower center", ncols=2)
-    fig.suptitle("Brute Force Search on 2D Quadratic Function")
-    return ax3d, ax2d
+    return ax
 
 
 def plot_convexity(a: float = -1.5, b: float = 1.5) -> None:

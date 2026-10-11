@@ -1,13 +1,15 @@
 """Plotting helpers and widget callbacks for the optimization tutorial.
 
-Used by ``notebooks/09_tutorials-optimization.ipynb``. Only figures and slider
-wiring live here: the objective functions, solver calls and algorithm loops that
-students read, run, modify or complete stay visible in the notebook and are passed
-to these helpers as arguments.
+Used by ``notebooks/09_tutorials-optimization.ipynb``. Only figures, slider
+wiring and the on-disk cache of the slow Lagrange-point SHGO run live here: the
+objective functions, solver calls and algorithm loops that students read, run,
+modify or complete stay visible in the notebook and are passed to these helpers
+as arguments.
 """
 
 from __future__ import annotations
 
+import pathlib
 from collections.abc import Callable, Sequence
 from typing import Any
 
@@ -15,8 +17,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
 from matplotlib.patches import Circle
+from scipy.optimize import OptimizeResult, shgo
 
 Func1D = Callable[[Any], Any]
+CACHE_DIR = pathlib.Path(__file__).resolve().parents[1] / "cache"
 
 # ---------------------------------------------------------------------------
 # Part 1: convexity, penalty functions, gradient descent
@@ -275,6 +279,36 @@ def plot_landscape_3d(
     ax.set_title("3D Surface Plot of MINLP Landscape")
     ax.set_box_aspect(None, zoom=0.82)  # keep all axis labels inside the figure
     return ax
+
+
+def cached_shgo(
+    func: Callable[[np.ndarray], float],
+    bounds: Sequence[tuple[float, float]],
+    n: float,
+    iters: int,
+    name: str = "tut09_lagrange_shgo",
+    recompute: bool = False,
+) -> OptimizeResult:
+    """shgo(func, bounds, n=n, iters=iters), loaded from notebooks/cache/<name>.npz when made with the same inputs."""
+    # The cache is used when bounds, n, iters and func's values at three probe points match
+    # (so an edited objective or mu is recomputed); it is written when missing or with recompute=True.
+    lo, hi = np.asarray(bounds, dtype=float).T
+    probe = np.array([func(lo + s * (hi - lo)) for s in (0.1234, 0.5678, 0.9012)])
+    key = {"bounds": np.asarray(bounds, dtype=float), "n": np.asarray(float(n)),
+           "iters": np.asarray(iters), "probe": probe}
+    path = CACHE_DIR / f"{name}.npz"
+    if path.exists() and not recompute:
+        with np.load(path) as data:
+            if all(data[k].shape == v.shape and np.allclose(data[k], v, rtol=1e-10, atol=0)
+                   for k, v in key.items()):
+                print(f"Loaded cache/{path.name}; pass recompute=True to rerun SHGO")
+                return OptimizeResult({k: data[k].item() if data[k].ndim == 0 else data[k]
+                                       for k in data.files if k not in key})
+    res = shgo(func, bounds, n=n, iters=iters)
+    if recompute or not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        np.savez_compressed(path, **key, **res)
+    return res
 
 
 def plot_lagrange_points(equilibria: np.ndarray, mu: float) -> Axes:

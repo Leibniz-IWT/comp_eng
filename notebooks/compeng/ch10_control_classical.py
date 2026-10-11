@@ -33,6 +33,22 @@ def plot_laplace_integrands(t: np.ndarray, f_t: np.ndarray, sigmas: list[float])
     return axs
 
 
+def plot_roc(poles: np.ndarray, title: str, sigma_lim: float = 3.0) -> Axes:
+    """Shade the region of convergence Re(s) > sigma_0 (right of the rightmost pole) in the s-plane."""
+    poles = np.asarray(poles, dtype=complex)
+    sigma0 = round(float(poles.real.max()), 9) + 0.0  # ROC boundary of a right-sided signal (+0.0: no "-0")
+    w_lim = 1.3 * max(1.0, float(np.abs(poles.imag).max()))
+    fig, ax = plt.subplots(figsize=(6, 4.5))
+    ax.axhline(0, color="0.5", lw=1)
+    ax.axvline(0, color="0.5", lw=1)  # imaginary axis
+    ax.axvspan(sigma0, sigma_lim, color="tab:blue", alpha=0.25, label=rf"ROC: Re$(s) > {sigma0:g}$")
+    ax.axvline(sigma0, color="tab:blue", ls="--", lw=2, label=rf"Boundary $\sigma_0 = {sigma0:g}$")
+    ax.plot(poles.real, poles.imag, "x", ms=11, mew=2.5, color="k", label="Poles of $F(s)$")
+    ax.set(xlim=(-sigma_lim, sigma_lim), ylim=(-w_lim, w_lim), xlabel=RE_LABEL, ylabel=IM_LABEL, title=title)
+    ax.legend(loc="upper left")
+    return ax
+
+
 def plot_block_diagram() -> Axes:
     """Draw the unity-feedback loop R(s) -> C(s) -> G(s) -> Y(s) with its feedback path."""
     fig, ax = plt.subplots(figsize=(10, 3.2))
@@ -62,7 +78,7 @@ def step_metrics(t: np.ndarray, y: np.ndarray, y_final: float, setpoint: float =
     """Rise time, overshoot, settling time and steady-state error as defined in the notebook text."""
     t, y = np.asarray(t), np.asarray(y)  # plain arrays (python-control returns NamedSignal objects)
     t_rise =t[np.argmax(y >= 0.9 * y_final)] - t[np.argmax(y >= 0.1 * y_final)]  # 10 % to 90 % of final value
-    overshoot = max(0.0, (y.max() - setpoint) / setpoint * 100)  # percentage above the setpoint
+    overshoot = max(0.0, (y.max() - y_final) / y_final * 100)  # percentage above the final value
     outside = np.flatnonzero(np.abs(y - y_final) > band * abs(y_final))
     t_settle = t[min(outside[-1] + 1, len(t) - 1)] if outside.size else t[0]  # stays inside the band after this
     return {"rise_time": t_rise, "overshoot": overshoot, "settling_time": t_settle, "ss_error": setpoint - y_final}
@@ -149,12 +165,18 @@ def plot_bode_margins(resp: ct.FrequencyResponseData, gm: float, pm: float, w_pc
     return ax_mag, ax_ph
 
 
-def plot_root_locus(rl: ct.PoleZeroData, title: str) -> Axes:
-    """Plot a root locus from ct.root_locus_map data: branches, open-loop poles (x) and zeros (o)."""
+def plot_root_locus(rl: ct.PoleZeroData, title: str, zeta: float | None = None) -> Axes:
+    """Plot a root locus from ct.root_locus_map data: branches, open-loop poles (x), zeros (o), optional zeta line."""
     r = max(1.0, np.abs(np.concatenate([rl.poles, rl.zeros])).max())
     fig, ax = plt.subplots(figsize=(7, 5.4))  # matches the 5:4 equal-aspect view
     ax.axhline(0, color="0.5", lw=1)
     ax.axvline(0, color="0.5", lw=1)  # imaginary axis
+    if zeta is not None:  # constant damping: rays s = rho (-zeta +- j sqrt(1 - zeta^2)), rho >= 0
+        wd = np.sqrt(1 - zeta**2)
+        for sign in (1, -1):
+            ax.plot([0, -5 * r * zeta], [0, sign * 5 * r * wd], color="tab:red", ls="--")
+        ax.text(-1.6 * r * zeta / wd - 0.15 * r, 1.6 * r, rf"$\zeta = {zeta}$", color="tab:red",
+                ha="right", va="center")  # label left of the upper ray
     ax.plot(rl.loci.real, rl.loci.imag, color="tab:blue")  # one column per branch
     ax.plot(rl.poles.real, rl.poles.imag, "x", ms=11, mew=2.5, color="k")
     ax.plot(rl.zeros.real, rl.zeros.imag, "o", ms=10, mew=2, mfc="none", color="k")

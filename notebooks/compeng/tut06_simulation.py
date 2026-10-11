@@ -20,15 +20,16 @@ INTEGRATOR_COLORS: dict[str, str] = {
 }
 
 
-def plot_orbits(orbits: dict[str, np.ndarray]) -> Axes:
-    """Plot the x-y orbits (state arrays with columns x, y, vx, vy) of several integrators around Earth."""
+def plot_orbits(orbits: dict[str, np.ndarray], earth_radius: float) -> Axes:
+    """Plot the x-y orbits (state arrays with columns x, y, vx, vy) of several integrators around Earth (to scale)."""
     fig, ax = plt.subplots(figsize=(6.0, 6.0))
+    # Earth to scale: an orbit that ends at its surface was stopped there (r < R_earth)
+    ax.add_patch(plt.Circle((0.0, 0.0), earth_radius, color="0.85", zorder=0, label="Earth"))
     for label, y in orbits.items():
         ax.plot(y[:, 0], y[:, 1], label=label, color=INTEGRATOR_COLORS.get(label))
-    ax.plot(0, 0, "ro", label="Earth")
     ax.set_xlabel("x (m)")
     ax.set_ylabel("y (m)")
-    ax.set_title("Orbits over 100 Periods")
+    ax.set_title("Orbits (up to 100 periods)")
     ax.axis("equal")
     ax.legend(frameon=True)  # the spirals fill the corners: keep the legend readable
     return ax

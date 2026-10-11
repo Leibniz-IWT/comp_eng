@@ -323,13 +323,6 @@ class PolicyNet(nn.Module):
         sigma = F.softplus(self.fc_sigma(x)) + 1e-5
         return mu, sigma
 
-    def sample(self, state: torch.Tensor) -> tuple[float, torch.Tensor, torch.Tensor]:
-        """Sample an action; return it with its log-probability and the policy entropy."""
-        mu, sigma = self(state)
-        dist = Normal(mu, sigma)
-        action = dist.sample()
-        return action.item(), dist.log_prob(action), dist.entropy()
-
 
 class ValueNet(nn.Module):
     """State-value network V(s), used as the REINFORCE baseline."""
@@ -352,7 +345,7 @@ def train_or_load_reinforce(
     hidden_dim: int = 128,
     lr_actor: float = 3e-4,
     lr_critic: float = 1e-3,
-    gamma: float = 0.99,
+    gamma: float = 0.95,
     num_episodes: int = 3000,
     max_steps: int = 300,
     entropy_beta: float = 0.01,
@@ -363,8 +356,9 @@ def train_or_load_reinforce(
 ) -> Agent:
     """Train REINFORCE with baseline on Pendulum-v1 with ``loss_fn``, or load it from the cache.
 
-    Every update uses ``num_envs`` consecutive episodes of ``max_steps`` steps;
-    ``loss_fn(log_probs, entropies, values, returns, entropy_beta)`` returns (actor loss, critic loss).
+    Each of the ``num_episodes`` updates uses ``num_envs`` episodes of ``max_steps`` steps, run side
+    by side; ``loss_fn(log_probs, entropies, values, returns, entropy_beta)`` gets one entry per time
+    step of these episodes and returns (actor loss, critic loss).
     """
     config = {k: v for k, v in locals().items() if k not in ("loss_fn", "recompute")}
     path = CACHE / "ch13_reinforce_pendulum.npz"
@@ -379,34 +373,39 @@ def train_or_load_reinforce(
         return Agent(policy, _load(path, config, policy_net=policy_net, value_net=value_net), policy_net)
 
     t0 = time.perf_counter()
-    env = gym.make("Pendulum-v1", max_episode_steps=max_steps)
-    env.reset(seed=seed)
+    envs = [gym.make("Pendulum-v1", max_episode_steps=max_steps) for _ in range(num_envs)]
+    for i, env in enumerate(envs):
+        env.reset(seed=seed + i)
     actor_optim = torch.optim.AdamW(policy_net.parameters(), lr=lr_actor)
     critic_optim = torch.optim.AdamW(value_net.parameters(), lr=lr_critic)
     curves: dict[str, list[float]] = {k: [] for k in ("episode_rewards", "avg_entropies", "actor_losses", "critic_losses")}
     with _torch_threads(1):
         for _ in range(num_episodes):
-            log_probs, entropies, values, returns, batch_rewards = [], [], [], [], 0.0
-            for _ in range(num_envs):  # several trajectories per update reduce the gradient variance
-                state, _ = env.reset()
-                rewards, done = [], False
-                while not done:
-                    state_tensor = torch.as_tensor(state, dtype=torch.float32)
-                    action, log_prob, entropy = policy_net.sample(state_tensor)
-                    values.append(value_net(state_tensor))
-                    state, reward, terminated, truncated, _ = env.step([action])
-                    done = terminated or truncated
-                    log_probs.append(log_prob)
-                    entropies.append(entropy)
-                    rewards.append(float(reward))
-                G, trajectory_returns = 0.0, []
-                for r in reversed(rewards):  # discounted return G_t within this trajectory
-                    G = r + gamma * G
-                    trajectory_returns.insert(0, G)
-                returns += trajectory_returns
-                batch_rewards += sum(rewards)
-            entropies_t, returns_t = torch.cat(entropies), torch.tensor(returns, dtype=torch.float32)
-            actor_loss, critic_loss = loss_fn(torch.cat(log_probs), entropies_t, torch.cat(values), returns_t, entropy_beta)
+            # several trajectories per update reduce the gradient variance; they run side by side
+            obs = np.array([env.reset()[0] for env in envs], dtype=np.float32)
+            states, actions, rewards = [], [], []
+            for _ in range(max_steps):  # Pendulum never terminates: every episode lasts max_steps steps
+                with torch.no_grad():
+                    mu, sigma = policy_net(torch.as_tensor(obs))
+                    action = Normal(mu, sigma).sample()
+                states.append(obs)
+                actions.append(action)
+                steps = [env.step(action[i].numpy()) for i, env in enumerate(envs)]
+                obs = np.array([s[0] for s in steps], dtype=np.float32)
+                rewards.append([float(s[1]) for s in steps])
+            R = np.array(rewards)  # (time step, episode)
+            G, g = np.zeros_like(R), np.zeros(num_envs)
+            for t in reversed(range(max_steps)):  # discounted return G_t (reward-to-go) of every episode
+                g = R[t] + gamma * g
+                G[t] = g
+            # log-probabilities, entropies and baselines V(s_t) of all time steps in one pass (same network)
+            S = torch.as_tensor(np.array(states)).reshape(max_steps * num_envs, 3)
+            mu, sigma = policy_net(S)
+            dist = Normal(mu, sigma)
+            log_probs = dist.log_prob(torch.stack(actions).reshape(max_steps * num_envs, 1)).squeeze(-1)
+            entropies, values = dist.entropy().squeeze(-1), value_net(S).squeeze(-1)
+            returns = torch.as_tensor(G.reshape(max_steps * num_envs), dtype=torch.float32)
+            actor_loss, critic_loss = loss_fn(log_probs, entropies, values, returns, entropy_beta)
             actor_optim.zero_grad()
             actor_loss.backward()
             torch.nn.utils.clip_grad_norm_(policy_net.parameters(), clip_grad_norm)
@@ -415,8 +414,8 @@ def train_or_load_reinforce(
             critic_loss.backward()
             torch.nn.utils.clip_grad_norm_(value_net.parameters(), clip_grad_norm)
             critic_optim.step()
-            curves["episode_rewards"].append(batch_rewards / num_envs)  # average per episode
-            curves["avg_entropies"].append(entropies_t.mean().item())
+            curves["episode_rewards"].append(float(R.sum(axis=0).mean()))  # average return per episode
+            curves["avg_entropies"].append(entropies.mean().item())
             curves["actor_losses"].append(actor_loss.item())
             curves["critic_losses"].append(critic_loss.item())
     arrays = {k: np.array(v) for k, v in curves.items()}

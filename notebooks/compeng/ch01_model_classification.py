@@ -14,6 +14,7 @@ from collections.abc import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
+from matplotlib.patches import Polygon, Rectangle
 from scipy.integrate import solve_ivp
 from scipy.optimize import root
 
@@ -121,6 +122,31 @@ def sho_callback(rhs: Callable[[float, np.ndarray, float], list[float]]) -> Call
 
 
 # --- 2.2 Linear vs. non-linear ------------------------------------------------------
+
+
+def draw_truss() -> Axes:
+    """Schematic of the triangular support: nodes 1 and 2 pinned to the bus deck, payload mass m at node 3."""
+    _, ax = plt.subplots(figsize=(6.0, 3.8))
+    ax.set(xlim=(-0.8, 4.8), ylim=(-0.75, 3.0), aspect="equal", title="Satellite-bus support frame (schematic)")
+    ax.axis("off")
+    nodes = [(0.0, 0.35), (4.0, 0.35), (2.0, 2.1)]
+    x3, y3 = nodes[2]
+    ax.add_patch(Rectangle((-0.6, -0.25), 5.2, 0.25, facecolor="none", edgecolor="0.4", hatch="///", lw=0))
+    ax.plot([-0.6, 4.6], [0, 0], color="black", lw=2)  # bus deck
+    ax.text(2.0, -0.45, "bus deck", ha="center", va="top")
+    for x, y in nodes[:2]:  # pinned supports
+        ax.add_patch(Polygon([(x, y), (x - 0.22, 0), (x + 0.22, 0)], facecolor="0.85", edgecolor="black"))
+    for x, y in nodes[:2]:  # the two bars
+        ax.plot([x, x3], [y, y3], color="tab:blue", lw=4, solid_capstyle="round")
+    ax.add_patch(Rectangle((x3 - 0.35, y3), 0.7, 0.5, facecolor="0.85", edgecolor="black"))  # payload
+    ax.text(x3, y3 + 0.25, "$m$", ha="center", va="center", fontsize=14)
+    ax.plot(*zip(*nodes, strict=True), "o", ms=11, mfc="white", mec="black", mew=1.5)
+    for (x, y), label, (dx, dy) in zip(nodes, "123", ((-0.3, 0.12), (0.3, 0.12), (-0.55, 0.0)), strict=True):
+        ax.text(x + dx, y + dy, label, ha="center", va="center", fontsize=14)
+    arrow = {"arrowstyle": "-|>", "color": "tab:red", "lw": 2}
+    ax.annotate("", xy=(x3 + 0.7, y3 - 0.1), xytext=(x3 + 0.7, y3 + 0.5), arrowprops=arrow)  # load on node 3
+    ax.text(x3 + 0.85, y3 + 0.2, "$mg$", color="tab:red", va="center", fontsize=14)
+    return ax
 
 
 def plot_spring_responses(t_lin: np.ndarray, x_lin: np.ndarray, t_non: np.ndarray, x_non: np.ndarray) -> Axes:

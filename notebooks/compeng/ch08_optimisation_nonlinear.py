@@ -12,9 +12,10 @@ from collections.abc import Callable, Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import patheffects
 from matplotlib.axes import Axes
 from matplotlib.colors import LogNorm
-from matplotlib.patches import Circle, ConnectionPatch, Patch
+from matplotlib.patches import Circle, ConnectionPatch, Patch, Rectangle
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 Func2D = Callable[[np.ndarray, np.ndarray], np.ndarray]
@@ -44,7 +45,7 @@ def plot_kkt_geometry(
     tangent = np.array([-grad_g[1], grad_g[0]]) / np.linalg.norm(grad_g)  # along the boundary g = 0
     s = np.array([-3.0, 3.0])
     ax.plot(x_kkt[0] + s * tangent[0], x_kkt[1] + s * tangent[1], "--", color="tab:orange",
-            label="Tangent plane of g at KKT point")
+            label="Tangent line of g at KKT point")
     ax.plot(*x_kkt, "ro", markersize=8, label=f"KKT point ({x_kkt[0]}, {x_kkt[1]})")
     ax.arrow(*x_kkt, *(scale * grad_f), head_width=0.05, color="tab:blue", label="∇f")
     ax.arrow(*x_kkt, *(scale * lam * grad_g), head_width=0.05, color="tab:red", label="λ ∇g")
@@ -87,6 +88,48 @@ def plot_constrained_surface(
     ax.legend(loc="upper left")
     ax.view_init(elev=20, azim=120)
     return ax
+
+
+def plot_constrained_contours(
+    f: Func2D,
+    curve_x: np.ndarray,
+    curve_y: np.ndarray,
+    minimum: tuple[float, float],
+    grad_f: np.ndarray,
+    grad_h: np.ndarray,
+    half_width: float = 0.3,
+) -> tuple[Axes, Axes]:
+    """Top view: filled contours of f with the constrained path, and a zoom on the level set of f tangent to it."""
+    x0, y0 = minimum
+    f_min = f(x0, y0)
+    X, Y = np.meshgrid(np.linspace(-2, 2, 300), np.linspace(-2, 2, 300))
+    XZ, YZ = np.meshgrid(np.linspace(x0 - half_width, x0 + half_width, 300),
+                         np.linspace(y0 - half_width, y0 + half_width, 300))
+    FZ = f(XZ, YZ)
+    fig, (ax_full, ax_zoom) = plt.subplots(1, 2, figsize=(9, 5.2))
+    # filled contours (the viridis surface seen from above); they also keep the PNG small
+    ax_full.contourf(X, Y, f(X, Y), levels=20, cmap="viridis")
+    ax_full.add_patch(Rectangle((x0 - half_width, y0 - half_width), 2 * half_width, 2 * half_width,
+                                fill=False, ec="w", lw=1.5))
+    ax_zoom.contourf(XZ, YZ, FZ, levels=np.linspace(FZ.min(), f_min + 0.6, 12), cmap="viridis", extend="max")
+    outline = [patheffects.withStroke(linewidth=4, foreground="k")]  # white dashes visible on any background
+    ax_zoom.contour(XZ, YZ, FZ, levels=[f_min], colors="w", linestyles="--", linewidths=2).set(path_effects=outline)
+    for ax in (ax_full, ax_zoom):
+        ax.plot(curve_x, curve_y, color="tab:red", linewidth=3, label="Constrained path (h=0)")
+        ax.plot(x0, y0, "ko", markersize=8, markeredgecolor="w", zorder=4, label="Constrained minimum")
+    ax_zoom.plot([], [], "w--", linewidth=2, path_effects=outline, label=f"Level set $f = {f_min:.2f}$")
+    mu = grad_f @ grad_h / (grad_h @ grad_h)  # grad_f = mu grad_h (projection)
+    scale = 0.5 * half_width
+    for v, color, name in ((grad_h, "tab:red", r"$\nabla h$"), (grad_f, "tab:blue", rf"$\nabla f = {mu:.2f}\,\nabla h$")):
+        ax_zoom.arrow(x0, y0, *(scale * v), width=0.02 * half_width, head_width=0.08 * half_width,
+                      length_includes_head=True, color=color, ec="k", lw=0.5, zorder=3, label=name)
+    ax_full.set(xlim=(-2, 2), ylim=(-2, 2), title="Top View: Contours of $f$")
+    ax_zoom.set(xlim=(x0 - half_width, x0 + half_width), ylim=(y0 - half_width, y0 + half_width),
+                title="Zoom: Tangency at the Minimum")
+    for ax in (ax_full, ax_zoom):
+        ax.set(aspect="equal", xlabel="$x_1$", ylabel="$x_2$")
+    fig.legend(*ax_zoom.get_legend_handles_labels(), loc="outside lower center", ncols=3)
+    return ax_full, ax_zoom
 
 
 def plot_reduced_objective(t: np.ndarray, f_t: np.ndarray, minimum: tuple[float, float]) -> Axes:

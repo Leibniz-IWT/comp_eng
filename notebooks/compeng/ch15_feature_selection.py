@@ -1,4 +1,5 @@
-"""Helpers for chapter 15 (feature selection for the hot strip mill data): loading, VIF filter, figures."""
+"""Helpers for chapter 15 (feature selection for the hot strip mill data): loading, VIF filter, permutation
+importance on a column subset, figures."""
 
 from __future__ import annotations
 
@@ -6,6 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.utils import Bunch
 from threadpoolctl import threadpool_limits
 
 VIF_INF = 1e4  # VIF >= 1e4 (R^2 >= 0.9999) is reported as inf, as in the original per-feature regressions
@@ -50,7 +53,7 @@ def calculate_vif(df: pd.DataFrame, features: list[str]) -> pd.DataFrame:
 
 
 def remove_high_vif_features(
-    df: pd.DataFrame, features: list[str], threshold: float = 10, max_iterations: int = 100
+    df: pd.DataFrame, features: list[str], threshold: float = 10, max_iterations: int = 200
 ) -> list[str]:
     """Iteratively remove the feature with the highest VIF until all VIF are <= threshold."""
     remaining, log = list(features), []
@@ -69,6 +72,24 @@ def remove_high_vif_features(
     return remaining
 
 
+class ColumnSubsetModel(RegressorMixin, BaseEstimator):
+    """A fitted model as a function of some columns of X; the other columns keep their values in X."""
+
+    def __init__(self, model: RegressorMixin, X: pd.DataFrame) -> None:
+        self.model = model
+        self.X = X
+
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> ColumnSubsetModel:
+        """Nothing to fit (the wrapped model is already fitted); permutation_importance requires the method."""
+        return self
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        """Predict with the columns of X written into the matching rows (same index) of the full matrix."""
+        X_full = self.X.loc[X.index]
+        X_full[X.columns] = X
+        return self.model.predict(X_full)
+
+
 def plot_lasso_coefficients(coef_df: pd.DataFrame, n_total: int, alpha: float, cutoff: float) -> Axes:
     """Bar chart of the Lasso coefficients in coef_df (sorted by magnitude), negative ones in red."""
     _, ax = plt.subplots(figsize=(9.0, max(4.5, 0.22 * len(coef_df) + 1.3)))
@@ -84,19 +105,25 @@ def plot_lasso_coefficients(coef_df: pd.DataFrame, n_total: int, alpha: float, c
     return ax
 
 
-def plot_rf_importance(plot_df: pd.DataFrame, n_total: int, cutoff: float, train_score: float) -> Axes:
-    """Bar chart of the random forest importances in plot_df (sorted descending), most important on top."""
-    _, ax = plt.subplots(figsize=(9.0, max(4.5, 0.18 * len(plot_df) + 1.3)))
+def plot_rf_importance(
+    plot_df: pd.DataFrame, perm: Bunch, n_total: int, cutoff: float, train_score: float
+) -> tuple[Axes, Axes]:
+    """Top random forest features (sorted by MDI, most important on top): MDI left, permutation importance right."""
+    fig, (ax, ax_perm) = plt.subplots(1, 2, sharey=True, figsize=(11.0, max(4.5, 0.18 * len(plot_df) + 1.6)))
     ax.barh(range(len(plot_df)), plot_df["Importance"], color="forestgreen", alpha=0.7)
     ax.set_yticks(range(len(plot_df)), plot_df["Feature"], fontsize=10)
-    ax.invert_yaxis()  # most important feature on top, as in the Lasso figure
-    ax.grid(visible=False, axis="y")
+    ax.invert_yaxis()  # most important feature on top, as in the Lasso figure (shared with the right panel)
     ax.set_xlabel("Feature Importance (MDI)")
     ax.set_ylabel("Features")
-    ax.set_title(f"Random Forest Feature Importance - Top {len(plot_df)} Features\n(n_estimators=100, max_depth=15)")
     stats = f"Features shown: {len(plot_df)} / {n_total}\nImportance threshold: {cutoff}\nR² score: {train_score:.4f}"
     ax.text(0.98, 0.02, stats, transform=ax.transAxes, ha="right", va="bottom")
-    return ax
+    n_repeats = perm.importances.shape[1]
+    ax_perm.barh(range(len(plot_df)), perm.importances_mean, xerr=perm.importances_std, color="forestgreen", alpha=0.7)
+    ax_perm.set_xlabel(f"Permutation importance (decrease in R²)\nmean ± std of {n_repeats} repeats, training data")
+    for a in (ax, ax_perm):
+        a.grid(visible=False, axis="y")
+    fig.suptitle(f"Random Forest Feature Importance - Top {len(plot_df)} Features\n(n_estimators=100, max_depth=15)")
+    return ax, ax_perm
 
 
 def compare_lasso_rf(

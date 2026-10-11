@@ -369,8 +369,8 @@ def poincare_section(
     crossing.direction = 1  # only count upward crossings (ẏ > 0)
     print(f"Integrating {len(ics)} orbits (several minutes) ...")
     sections = []
-    for ic in ics:
-        sol = solve_ivp(rhs, t_span, ic, args=args, method="RK45", rtol=1e-8, atol=1e-8,
+    for ic in ics:  # DOP853 at tight tolerances keeps the Jacobi constant to ~1e-5 over t = 1000
+        sol = solve_ivp(rhs, t_span, ic, args=args, method="DOP853", rtol=1e-10, atol=1e-10,
                         events=crossing)
         sections.append(sol.y_events[0][:, [0, 2]])
     if path is not None and (recompute or not path.exists()):
@@ -381,15 +381,22 @@ def poincare_section(
     return sections
 
 
-def plot_poincare(sections: Sequence[np.ndarray], values: Sequence[float], mu: float) -> Axes:
-    """Poincaré section points (x, ẋ), coloured per orbit by its initial ẏ."""
+def plot_poincare(
+    sections: Sequence[np.ndarray],
+    x0s: Sequence[float],
+    mu: float,
+    C: float,
+    xdot_max: float = 4.0,
+) -> Axes:
+    """Poincaré section points (x, ẋ), coloured per orbit by its initial x."""
     fig, ax = plt.subplots()
-    norm = plt.Normalize(min(values), max(values))
+    norm = plt.Normalize(min(x0s), max(x0s))
     cmap = plt.get_cmap("viridis")
-    for points, value in zip(sections, values, strict=True):
-        ax.scatter(points[:, 0], points[:, 1], s=1, color=cmap(norm(value)), linewidths=0)
+    for points, x0 in zip(sections, x0s, strict=True):
+        ax.scatter(points[:, 0], points[:, 1], s=2, color=cmap(norm(x0)), linewidths=0)
     fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax,
-                 label=r"initial $\dot{y}$ of the orbit")
-    ax.set(xlabel="$x$", ylabel=r"$\dot{x}$",
-           title=rf"Poincaré Section ($y=0$, $\dot{{y}}>0$) for CR3BP, $\mu={mu}$")
+                 label=r"initial $x$ of the orbit")
+    # close passes of a primary (x = -mu, 1 - mu) reach much larger |ẋ|; they are cut off
+    ax.set(xlabel="$x$", ylabel=r"$\dot{x}$", ylim=(-xdot_max, xdot_max),
+           title=rf"Poincaré Section ($y=0$, $\dot{{y}}>0$) for CR3BP, $\mu={mu}$, $C={C}$")
     return ax

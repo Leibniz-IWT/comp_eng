@@ -60,8 +60,8 @@ def plot_profile(x: np.ndarray, c: np.ndarray, t: float) -> Axes:
 A_LINEAR = np.array([[2.0, 1.0], [1.0, 3.0]])
 
 
-def property_test_data() -> tuple[np.ndarray, ...]:
-    """Inputs X and noise-free outputs (Y_linear, ..., Y_static, Y_dynamic) for Exercise 3."""
+def property_test_data(t: np.ndarray) -> tuple[np.ndarray, ...]:
+    """Inputs X and noise-free outputs (Y_linear, ..., Y_dynamic) for Exercise 3; row i is sampled at t[i]."""
     # Input data (100 points, x_1, x_2 in [-5, 5]): the diagonal and the anti-diagonal
     X = np.array([
         [-5.0, -5.0], [-4.8, -4.8], [-4.6, -4.6], [-4.4, -4.4], [-4.2, -4.2],
@@ -100,33 +100,12 @@ def property_test_data() -> tuple[np.ndarray, ...]:
     # Asymmetric model outputs: f = 2x_1 + 3x_2
     Y_asymmetric = (2 * x1 + 3 * x2)[:, None]
 
-    # Static and dynamic outputs: values kept exactly as in the WiSe 2025/26 notebook.
-    # Static model outputs: A x = b, A = [[2, 1], [1, 3]], b = [5, 7]
-    Y_static = np.array([
-        [-15.0, -18.0], [-14.4, -17.4], [-13.8, -16.8], [-13.2, -16.2], [-12.6, -15.6],
-        [-12.0, -15.0], [-11.4, -14.4], [-10.8, -13.8], [-10.2, -13.2], [-9.6, -12.6],
-        [-9.0, -12.0], [-8.4, -11.4], [-7.8, -10.8], [-7.2, -10.2], [-6.6, -9.6],
-        [-6.0, -9.0], [-5.4, -8.4], [-4.8, -7.8], [-4.2, -7.2], [-3.6, -6.6],
-        [-3.0, -6.0], [-2.4, -5.4], [-1.8, -4.8], [-1.2, -4.2], [-0.6, -3.6],
-        [0.0, -3.0], [0.6, -2.4], [1.2, -1.8], [1.8, -1.2], [2.4, -0.6],
-        [3.0, 0.0], [3.6, 0.6], [4.2, 1.2], [4.8, 1.8], [5.4, 2.4],
-        [6.0, 3.0], [6.6, 3.6], [7.2, 4.2], [7.8, 4.8], [8.4, 5.4],
-        [9.0, 6.0], [9.6, 6.6], [10.2, 7.2], [10.8, 7.8], [11.4, 8.4],
-        [12.0, 9.0], [12.6, 9.6], [13.2, 10.2], [13.8, 10.8], [14.4, 11.4],
-        [15.0, 12.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0],
-        [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0],
-        [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0],
-        [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0],
-        [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0], [0.0, -3.0],
-        [0.0, -3.0], [0.6, -2.4], [1.2, -1.8], [1.8, -1.2], [2.4, -0.6],
-        [3.0, 0.0], [3.6, 0.6], [4.2, 1.2], [4.8, 1.8], [5.4, 2.4],
-        [6.0, 3.0], [6.6, 3.6], [7.2, 4.2], [7.8, 4.8], [8.4, 5.4],
-        [9.0, 6.0], [9.6, 6.6], [10.2, 7.2], [10.8, 7.8], [11.4, 8.4],
-        [12.0, 9.0], [12.6, 9.6], [13.2, 10.2], [13.8, 10.8], [14.4, 11.4]
-    ])
-    # Dynamic model outputs: ODE dy/dt = -A y, y(0) = [1, 0], t = 0 to 1, sampled at t=1
-    # A = [[0, 1], [-2, -3]], solved analytically for simplicity (95 identical rows)
-    Y_dynamic = np.tile([0.1353, -0.4060], (95, 1))
+    # Static model outputs: f(x) = A x + b, A = [[2, 1], [1, 3]], b = [5, 7]
+    Y_static = X @ A_LINEAR.T + np.array([5.0, 7.0])
+    # Dynamic model outputs: y(t_i) of the ODE dy/dt = -A y, y(0) = [1, 0], A = [[0, 1], [-2, -3]],
+    # sampled at the times t (row i at t[i]), solved analytically for simplicity:
+    # y_1(t) = 2 e^t - e^(2t), y_2(t) = 2 e^(2t) - 2 e^t
+    Y_dynamic = np.column_stack([2 * np.exp(t) - np.exp(2 * t), 2 * np.exp(2 * t) - 2 * np.exp(t)])
 
     return (X, Y_linear, Y_nonlinear, Y_uncoupled, Y_coupled,
             Y_symmetric, Y_asymmetric, Y_static, Y_dynamic)
@@ -189,7 +168,8 @@ def plot_transfer(burn1_duration: float, burn2_duration: float,
     ax.legend(loc="center left", bbox_to_anchor=(1.02, 0.5))
 
 
-def plot_three_body(perturbation: float, simulate: Callable[[float], Any], d_binary: float) -> None:
+def plot_three_body(perturbation: float, simulate: Callable[[float], Any], d_binary: float,
+                    pos_planet2: Callable[[float], np.ndarray]) -> None:
     """Widget callback: simulate the three-body problem with ``simulate``, plot trajectory and Poincaré map."""
     sol = simulate(perturbation)
     if not sol.success:
@@ -211,14 +191,14 @@ def plot_three_body(perturbation: float, simulate: Callable[[float], Any], d_bin
     axs[0].legend(loc="upper right", frameon=True)  # frame keeps the text readable over the orbit circle
     axs[0].set_aspect("equal", adjustable="datalim")
 
-    # Poincaré map (x vs vx at y=0 crossings)
+    # Poincaré map (x vs vx at y=0 crossings in the frame rotating with Planet 2)
     if len(sol.t_events[0]) > 2:  # need multiple crossings for a map
-        y_events = sol.y_events[0]
-        x_events, vx_events = y_events[:, 0], y_events[:, 2]
-        axs[1].scatter(x_events, vx_events, s=15, color="tab:orange")
-        spread = np.std(x_events) + np.std(vx_events)
-        class_text = "Chaotic (scattered)" if spread > 1e6 else "Periodic/Quasi-periodic"
-        axs[1].set_title(f"Poincaré Map (y=0 crossings)\n{class_text}")
+        x, y, vx, vy = sol.y_events[0].T
+        e = np.array([pos_planet2(t) for t in sol.t_events[0]])
+        ex, ey = (e / np.linalg.norm(e, axis=1, keepdims=True)).T  # rotating x axis: direction to Planet 2
+        # at y = 0 the frame rotation only adds a y velocity, so v_x is the projection of v on that axis
+        axs[1].scatter(ex * x + ey * y, ex * vx + ey * vy, s=15, color="tab:orange")
+        axs[1].set_title("Poincaré Map (y=0 crossings)\nframe rotating with Planet 2")
     else:
         axs[1].set_title("Poincaré Map (insufficient crossings)")
     axs[1].set_xlabel("x (m)")

@@ -63,10 +63,7 @@ Students should submit via the designated channel (Google Form / email) includin
 // Client-side sorting: click column headers (Score, Days in orbit, Fuel mass remaining)
 document.addEventListener("DOMContentLoaded", function() {
   const table = document.querySelector("table");
-  const headers = tablfrom IPython.display import Video
-
-# Embed with base64 (works locally and on Pages, no path issues)
-Video("animation.mp4", embed=True, width=600, html_attributes="controls loop")e.querySelectorAll("th");
+  const headers = table.querySelectorAll("th");
   
   headers.forEach((header, index) => {
     if (index === 0 || index === 1 || index === 5) return; // skip Rank, Model name, Notes
