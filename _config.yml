@@ -19,6 +19,7 @@ html:
     © 2025 University of Bremen. Released under CC-BY-4.0.
 launch_buttons:
   binderhub_url: https://mybinder.org
+  notebook_interface: jupyterlab     # open in JupyterLab, where Alt+R starts the live RISE slideshow
 sphinx:
   config:
     nb_merge_streams: true          # one output box per cell instead of one per flushed print
