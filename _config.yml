@@ -1,7 +1,12 @@
 # Minimal Jupyter Book config
-title: Computational Methods (WiSe 2025/2026)
+title: Computational Methods (WiSe 2026/2027)
 author: Stefan Endres & Lutz Mädler
 only_build_toc_files: true          # only the notebooks listed in _toc.yml
+# only_build_toc_files skips hidden directories, so list them explicitly
+exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", ".claude/**", ".idea/**", "archive/**", "dev/**",
+                   "project_*/**", "loose/**", "solutions/**", "notebooks/bup*/**", "notebooks/dev/**", "notebooks/archive/**"]
+execute:
+  execute_notebooks: 'off'          # the site shows the outputs stored in the notebooks (run them locally first)
 repository:
   url: https://github.com/Leibniz-IWT/comp_eng
   path_to_book: .
@@ -14,3 +19,6 @@ html:
     © 2025 University of Bremen. Released under CC-BY-4.0.
 launch_buttons:
   binderhub_url: https://mybinder.org
+sphinx:
+  config:
+    nb_merge_streams: true          # one output box per cell instead of one per flushed print

@@ -16,28 +16,37 @@ jobs:
     # 1 ─ Checkout the repo
     - uses: actions/checkout@v4
 
-    # 2 ─ Python env (same as before)
+    # 2 ─ Python env
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
-    # 3 ─ Install everything the notebooks import  ⟵  add matplotlib, scipy …
+    # 3 ─ Install the book tooling (notebooks are NOT executed here:
+    #     _config.yml sets execute_notebooks: off, the stored outputs are used)
     - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        # extra run-time deps used *inside* notebooks
-        pip install matplotlib scipy ipywidgets
+      run: pip install -r requirements.txt
 
-    # 4 ─ Build the Jupyter-Book (executes notebooks)
+    # 4 ─ Check that every notebook in the TOC follows the conventions and has outputs
+    - name: Validate notebooks
+      run: python tools/check_notebooks.py --toc
+
+    # 5 ─ Stamp the deployed commit and date into the page footer, then build the Jupyter-Book
+    - name: Stamp build info into the footer
+      run: sed -i "s|Released under CC-BY-4.0.|Released under CC-BY-4.0. Site built from commit ${GITHUB_SHA::7} on $(date -u +%Y-%m-%d).|" _config.yml
     - run: jupyter-book build . # --keep-going
 
-    # 5 ─ Copy raw notebooks (with their images) into the built site  ⟵  NEW
+    # 6 ─ Export every notebook as reveal.js slides into the site (slides/<name>.slides.html)
+    - name: Build slides
+      run: python tools/build_slides.py --out _build/html/slides
+
+    # 7 ─ Copy raw notebooks (helper package, images, media, caches) into the built site so
+    #     that relative <img>/<video> paths resolve. The 300 MB data/ folder is not needed online.
     - name: Copy notebooks to site folder
       run: |
         mkdir -p _build/html/notebooks
-        cp -r notebooks/* _build/html/notebooks/
+        rsync -a --exclude 'data/' --exclude '__pycache__/' --exclude '.ipynb_checkpoints/' notebooks/ _build/html/notebooks/
 
-    # 6 ─ Upload the generated site
+    # 8 ─ Upload the generated site
     - uses: actions/upload-pages-artifact@v3
       with:
         path: _build/html

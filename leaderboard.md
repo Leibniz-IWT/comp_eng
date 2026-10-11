@@ -26,11 +26,6 @@ Students should submit via the designated channel (Google Form / email) includin
 - Model files (shareable Nexcloud or Drive folder or GitHub release)  
 - Self-reported metrics and a short description
 
-Model name (anonymously name to be added to leaderboard): Der Gerät
-Days in orbit: 180.0 days
-Fuel mass remaining: 352.15992895985124 kg
-Score = 253616.6155650075
-
 | Rank | Model name                        | Score               | Days in orbit   | Fuel mass remaining (kg) | Notes                                                                                                                                                                                                                                                                |
 |------|-----------------------------------|---------------------|-----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1.   | Der_Gerät                         | 253616.6155650075   | 180.0 days      | 352.12 kg                |                                                                                                                                                                                                                                                                      |

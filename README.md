@@ -13,9 +13,18 @@ Run `conda env create -f environment.yml`.
 
 ## The workflow for this repository is as follows:
 1. Activate the environment with `conda activate compeng`.
-2. Make changes to the `/notebooks` files and ensure that all the example code runs locally.
+2. Make changes to the `/notebooks` files. Helper code (plotting, widgets, long simulations) lives in the
+   `notebooks/compeng/` package so that the notebooks only show the essential code; see `notebooks/compeng/README.md`.
 3. When adding a new notebook, do _not_ manually add it, but add it to _toc.yml_ instead.
-4. Run `fix_books.py` (helper script to fix GitHub pages errors).
+4. Run and validate the notebooks you changed. The website is built from the stored outputs, so this step
+   is what the students will see:
+   ```bash
+   python tools/check_notebooks.py notebooks/03_chaos.ipynb --execute   # one notebook
+   python tools/check_notebooks.py --toc                                 # every notebook in _toc.yml
+   ```
+   The checker also verifies the slide metadata: every cell carries a RISE slide type so the notebook can be
+   presented with `jupyterlab-rise` (`Alt+R` in JupyterLab) and is exported to static slides by the website build
+   (`python tools/build_slides.py`).
 5. Commit and push your changes to the repository:
    ```bash
    git add .

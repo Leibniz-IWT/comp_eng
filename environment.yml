@@ -2,7 +2,7 @@ name: compeng
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.12
   - jupyterlab
   - notebook
   - numpy
@@ -20,3 +20,4 @@ dependencies:
       #- jupyter-book>=1.0.0
       - jupyter-book<2.0
       - stable-baselines3
+      - jupyterlab-rise              # live reveal.js slides in JupyterLab (Alt+R)

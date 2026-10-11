@@ -1,8 +1,8 @@
 ---
-title: Computational Methods – WiSe 2025/2026
+title: Computational Methods – WiSe 2026/2027
 ---
 
-# Computational Methods – WiSe 2025/2026
+# Computational Methods – WiSe 2026/2027
 
 ## Introduction
 
@@ -10,7 +10,7 @@ Welcome! In this module you will learn a wide set of methods in the domain of co
 
 This course bridges many topics which are traditionally taught separately in order to establish a cohesive framework which connects everything else that you have learned and/or will learn throughout the course of your graduate studies back to _a_ practical framework that you are comfortable with using. The focus of this course is on what is inherently computational (and just as importantly what _isn't_ computational!), with theoretical depth limited to what is useful for practicing engineers to know in their everyday work. At the end of each unit further literature is suggested for more in-depth study. This course is intentionally structured in a such a way that concepts introduced are always given with code that can be played with, this is essential for learning these skillsets and establishing a practical working knowledge of all the methods introduced here. While the context and examples are focussed on space engineering, these methods are, of course, used in a wide variety of engineering disciplines.
 
-Below you’ll find links to each unit's notebook. Each unit is meant to be studied in a single week.
+Below you’ll find links to each unit's notebook. Each unit is meant to be studied in a single week. Every unit is also available as a [slide deck](https://leibniz-iwt.github.io/comp_eng/slides/index.html) (the same notebook, one idea per slide), and the supporting Python code of each unit can be read in the [`notebooks/compeng`](https://github.com/Leibniz-IWT/comp_eng/tree/main/notebooks/compeng) package.
 
 ## Syllabus
 

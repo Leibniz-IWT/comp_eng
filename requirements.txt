@@ -1,6 +1,7 @@
 #jupyter-book>=1.0
 jupyter-book<2.0
 myst-nb
+nbconvert   # tools/build_slides.py (not pulled in by jupyter-book 1.x any more)
 numpy
 scipy
 sympy
