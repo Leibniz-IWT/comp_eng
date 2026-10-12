@@ -17,6 +17,8 @@ dependencies:
   - control
   - pygame
   - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cpu   # CPU-only PyTorch (about 200 MB instead of a multi-GB CUDA download); GPU training for the project runs on Colab
+      - torch
       #- jupyter-book>=1.0.0
       - jupyter-book<2.0
       - stable-baselines3

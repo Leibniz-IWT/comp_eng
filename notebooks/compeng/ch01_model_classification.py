@@ -14,7 +14,7 @@ from collections.abc import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
-from matplotlib.patches import Polygon, Rectangle
+from matplotlib.patches import Arc, Circle, Polygon, Rectangle
 from scipy.integrate import solve_ivp
 from scipy.optimize import root
 
@@ -125,27 +125,42 @@ def sho_callback(rhs: Callable[[float, np.ndarray, float], list[float]]) -> Call
 
 
 def draw_truss() -> Axes:
-    """Schematic of the triangular support: nodes 1 and 2 pinned to the bus deck, payload mass m at node 3."""
-    _, ax = plt.subplots(figsize=(6.0, 3.8))
-    ax.set(xlim=(-0.8, 4.8), ylim=(-0.75, 3.0), aspect="equal", title="Satellite-bus support frame (schematic)")
+    """Support frame to scale: node 1 pinned, node 2 on a roller, payload m at node 3, unknowns u1, u2, u3."""
+    _, ax = plt.subplots(figsize=(6.4, 4.8))
+    ax.set(xlim=(-0.4, 1.75), ylim=(-0.32, 1.2), aspect="equal", title="Satellite-bus support frame (schematic)")
     ax.axis("off")
-    nodes = [(0.0, 0.35), (4.0, 0.35), (2.0, 2.1)]
-    x3, y3 = nodes[2]
-    ax.add_patch(Rectangle((-0.6, -0.25), 5.2, 0.25, facecolor="none", edgecolor="0.4", hatch="///", lw=0))
-    ax.plot([-0.6, 4.6], [0, 0], color="black", lw=2)  # bus deck
-    ax.text(2.0, -0.45, "bus deck", ha="center", va="top")
-    for x, y in nodes[:2]:  # pinned supports
-        ax.add_patch(Polygon([(x, y), (x - 0.22, 0), (x + 0.22, 0)], facecolor="0.85", edgecolor="black"))
-    for x, y in nodes[:2]:  # the two bars
-        ax.plot([x, x3], [y, y3], color="tab:blue", lw=4, solid_capstyle="round")
-    ax.add_patch(Rectangle((x3 - 0.35, y3), 0.7, 0.5, facecolor="0.85", edgecolor="black"))  # payload
-    ax.text(x3, y3 + 0.25, "$m$", ha="center", va="center", fontsize=14)
-    ax.plot(*zip(*nodes, strict=True), "o", ms=11, mfc="white", mec="black", mew=1.5)
-    for (x, y), label, (dx, dy) in zip(nodes, "123", ((-0.3, 0.12), (0.3, 0.12), (-0.55, 0.0)), strict=True):
+    nodes = [(0.0, 0.0), (1.2, 0.0), (0.6, 0.8)]  # m; bars 1-3 and 2-3 are 1.0 m long, cos(alpha) = 0.6
+    (x1, y1), (x2, y2), (x3, y3) = nodes
+    ax.add_patch(Rectangle((-0.3, -0.16), 1.9, 0.06, facecolor="none", edgecolor="0.4", hatch="///", lw=0))
+    ax.plot([-0.3, 1.6], [-0.1, -0.1], color="black", lw=2)  # bus deck
+    ax.text(0.6, -0.19, "bus deck", ha="center", va="top")
+    ax.add_patch(Polygon([(x1, y1), (x1 - 0.07, -0.1), (x1 + 0.07, -0.1)], facecolor="0.85", edgecolor="black"))
+    ax.add_patch(Polygon([(x2, y2), (x2 - 0.07, -0.07), (x2 + 0.07, -0.07)], facecolor="0.85", edgecolor="black"))
+    for dx in (-0.04, 0.04):  # roller wheels
+        ax.add_patch(Circle((x2 + dx, -0.085), 0.015, facecolor="white", edgecolor="black"))
+    for (xa, ya), (xb, yb), label, rot, (ox, oy) in (
+        (nodes[0], nodes[1], "1.2 m", 0, (0, 0.05)),
+        (nodes[0], nodes[2], "1.0 m", 53.13, (-0.06, 0.045)),
+        (nodes[1], nodes[2], "1.0 m", -53.13, (0.06, 0.045)),
+    ):
+        ax.plot([xa, xb], [ya, yb], color="tab:blue", lw=4, solid_capstyle="round", zorder=1)
+        ax.text((xa + xb) / 2 + ox, (ya + yb) / 2 + oy, label, rotation=rot, ha="center", va="center", fontsize=11)
+    ax.add_patch(Arc((x1, y1), 0.36, 0.36, theta1=0, theta2=53.13))
+    ax.text(0.22, 0.1, r"$\alpha$", ha="center", va="center")
+    ax.plot([x1, x2], [y1, y2], "o", ms=11, mfc="white", mec="black", mew=1.5)
+    ax.plot(x3, y3, "o", ms=24, mfc="0.85", mec="black", mew=1.5)  # node 3 carries the payload mass
+    ax.text(x3, y3, "$m$", ha="center", va="center", fontsize=13)
+    for (x, y), label, (dx, dy) in zip(nodes, "123", ((-0.1, 0.1), (0.1, 0.1), (-0.14, 0.04)), strict=True):
         ax.text(x + dx, y + dy, label, ha="center", va="center", fontsize=14)
-    arrow = {"arrowstyle": "-|>", "color": "tab:red", "lw": 2}
-    ax.annotate("", xy=(x3 + 0.7, y3 - 0.1), xytext=(x3 + 0.7, y3 + 0.5), arrowprops=arrow)  # load on node 3
-    ax.text(x3 + 0.85, y3 + 0.2, "$mg$", color="tab:red", va="center", fontsize=14)
+    dof = {"arrowstyle": "-|>", "color": "black", "lw": 1.5}  # unknown displacements, positive directions
+    ax.annotate("", xy=(x2 + 0.28, y2), xytext=(x2 + 0.04, y2), arrowprops=dof)
+    ax.annotate("", xy=(x3 + 0.3, y3), xytext=(x3 + 0.07, y3), arrowprops=dof)
+    ax.annotate("", xy=(x3, y3 + 0.3), xytext=(x3, y3 + 0.07), arrowprops=dof)
+    for x, y, label in ((x2 + 0.31, y2, "$u_1$"), (x3 + 0.33, y3, "$u_2$"), (x3 + 0.03, y3 + 0.3, "$u_3$")):
+        ax.text(x, y, label, va="center", fontsize=14)
+    ax.annotate("", xy=(x3, y3 - 0.3), xytext=(x3, y3 - 0.07), arrowprops={**dof, "color": "tab:red", "lw": 2})
+    ax.text(x3, y3 - 0.33, "$mg$", color="tab:red", ha="center", va="top", fontsize=14)  # load -mg along u3
+    ax.text(-0.38, 1.15, r"all bars: $EA = 6\times10^{6}$ N", va="top", fontsize=11)
     return ax
 
 

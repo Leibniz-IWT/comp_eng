@@ -247,3 +247,6 @@ notebooks/03TODO
 /orbit_maintenance_plots.png
 /TODOs
 /solutions/03-tut.py
+
+# Tutorial solutions stay local until the lecturer releases them
+solutions/

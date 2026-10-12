@@ -1,10 +1,10 @@
 """Plotting helpers and widget callbacks for the optimization tutorial.
 
-Used by ``notebooks/09_tutorials-optimization.ipynb``. Only figures, slider
-wiring and the on-disk cache of the slow Lagrange-point SHGO run live here: the
-objective functions, solver calls and algorithm loops that students read, run,
-modify or complete stay visible in the notebook and are passed to these helpers
-as arguments.
+Used by ``notebooks/09_tutorials-optimization.ipynb`` and its separate solutions
+notebook. Only figures, slider wiring and an on-disk cache for slow SHGO runs live
+here: the objective functions, solver calls and algorithm loops that students read,
+run, modify or complete stay visible in the notebooks and are passed to these
+helpers as arguments.
 """
 
 from __future__ import annotations
@@ -288,15 +288,16 @@ def cached_shgo(
     iters: int,
     name: str = "tut09_lagrange_shgo",
     recompute: bool = False,
+    cache_dir: str | pathlib.Path = CACHE_DIR,
 ) -> OptimizeResult:
-    """shgo(func, bounds, n=n, iters=iters), loaded from notebooks/cache/<name>.npz when made with the same inputs."""
+    """shgo(func, bounds, n=n, iters=iters), loaded from <cache_dir>/<name>.npz when made with the same inputs."""
     # The cache is used when bounds, n, iters and func's values at three probe points match
     # (so an edited objective or mu is recomputed); it is written when missing or with recompute=True.
     lo, hi = np.asarray(bounds, dtype=float).T
     probe = np.array([func(lo + s * (hi - lo)) for s in (0.1234, 0.5678, 0.9012)])
     key = {"bounds": np.asarray(bounds, dtype=float), "n": np.asarray(float(n)),
            "iters": np.asarray(iters), "probe": probe}
-    path = CACHE_DIR / f"{name}.npz"
+    path = pathlib.Path(cache_dir) / f"{name}.npz"
     if path.exists() and not recompute:
         with np.load(path) as data:
             if all(data[k].shape == v.shape and np.allclose(data[k], v, rtol=1e-10, atol=0)

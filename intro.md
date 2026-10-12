@@ -79,17 +79,20 @@ Binder will build a temporary Jupyter-Lab session in the cloud; nothing to insta
     conda env create -f environment.yml     # creates “compeng”
     conda activate compeng
     ```
-You can now start either jupyter lab or classic notebook, then every time you work on this course just reactive the virtual environment first:
+   The environment installs the CPU build of PyTorch (about 200 MB), which is all the course notebooks need; GPU training for the project runs on Colab.
+You can now start JupyterLab, then every time you work on this course just reactivate the virtual environment first:
 
 2. **Daily work flow (every time you start a new terminal session)**:
     ```bash
     # First navigate to the project folder where you cloned the repository using `cd path/to/comp_eng`
     git pull  # (in the base directory where you saved the project)
-    conda activate compeng  # Reactive the environment
-    jupyter lab          # or: jupyter notebook
-    # Once jupyter lab/notebook is running, open the notebook you want to work on
+    conda activate compeng  # Reactivate the environment
+    jupyter lab          # JupyterLab (the classic `jupyter notebook` also runs the notebooks, but not the slide mode)
+    # Once JupyterLab is running, open the notebook you want to work on
     ```
-Your browser will open at `http://localhost:8888`, then launch for e.g. **notebooks/01_model-classification.ipynb**.
+Your browser will open at `http://localhost:8888`, then open for e.g. **notebooks/01_model-classification.ipynb**. Open the notebooks from the `notebooks/` folder as they are: each one imports its helper code from `notebooks/compeng/` relative to its own location, so no further installation is needed.
+
+3. **Slide mode (optional)**: with a notebook open in JupyterLab, press `Alt+R` to present it as slides (the same cells, one idea per slide, widgets and code still live; `Shift+Enter` runs a cell inside the slideshow and `Alt+R` returns to the notebook). The static slide decks linked from each chapter show the same slides without a kernel.
 
 4. (Optional) **Updating later:**
 Pull the repo (git pull) and refresh the environment (conda env update -f environment.yml).
