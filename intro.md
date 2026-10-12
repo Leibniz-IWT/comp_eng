@@ -61,6 +61,7 @@ You can run the notebooks in two ways: (1) Binder (fully online, no install need
 
 Click the **“Launch Binder”** badge at the top-right of any page (or the button below).  
 Binder will build a temporary Jupyter-Lab session in the cloud; nothing to install on your computer.
+The sliders of the interactive figures need a running kernel: run the cell above a slider once (`Shift+Enter`) and it becomes live. On this website and in the static slides the sliders are greyed out and show the initial state only.
 
 > **Note:** The build takes a couple of minutes, a read-only preview appears first.  
 > Leave the tab open: your interactive session will load automatically when ready.

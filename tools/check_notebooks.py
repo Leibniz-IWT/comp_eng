@@ -31,6 +31,9 @@ import time
 
 import nbformat
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from disable_saved_widgets import CONTROL_SUFFIXES, STATE_KEY, patch as disable_saved_controls  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SLIDE_TYPES = {"slide", "subslide", "fragment", "skip", "notes"}
 MAX_MD_WORDS = 160
@@ -120,6 +123,7 @@ def execute(path: pathlib.Path, timeout: int) -> list[str]:
     client.execute()
     dt = time.perf_counter() - t0
     nbformat.write(nb, path)
+    disable_saved_controls(path)  # stored widgets have no kernel behind them: show them greyed out
     problems: list[str] = []
     for i, cell in enumerate(nb.cells):
         if cell.cell_type != "code":
@@ -145,6 +149,15 @@ def check(path: pathlib.Path) -> tuple[list[str], list[str]]:
         errors.append(f"file size {size_mb:.1f} MB exceeds {MAX_NB_MB} MB (move media to notebooks/media/)")
     elif size_mb > WARN_NB_MB:
         warnings.append(f"file size {size_mb:.1f} MB above {WARN_NB_MB} MB target")
+
+    state = nb.metadata.get("widgets", {}).get(STATE_KEY, {}).get("state", {})
+    enabled = [
+        m["model_name"]
+        for m in state.values()
+        if m.get("model_name", "").endswith(CONTROL_SUFFIXES) and not m.get("state", {}).get("disabled")
+    ]
+    if enabled:
+        warnings.append(f"{len(enabled)} stored widget control(s) enabled; run tools/disable_saved_widgets.py")
 
     cells = nb.cells
     if not cells or cells[0].cell_type != "markdown" or not cells[0].source.lstrip().startswith("# "):
